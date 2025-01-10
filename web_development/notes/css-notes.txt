@@ -1,0 +1,228 @@
+selector {
+    property: value;
+}
+x
+input[type="text"]:nth-of-type(2n) {
+    border: 2px solid red;
+}
+
+    cascading stylesheet
+        order matters. as you go down, the most recent one wins.
+
+    specificity
+        rules to apply when multiple rules could apply to same element
+        more specific selector wins
+            !important
+            inline styles
+            id 
+            class , attribute   & pseudo-class selectors
+            element and psuedo-element selectors
+        
+    inheritance
+        some css properties will be inherited by children inherently
+        certain elements don't inherit by default
+        
+
+Including Styles:
+    
+    Inline Styles
+        <h1 style="color: purple">Hello World</h1>
+    
+    <style> element
+        <head>
+            <style>
+                h2 {
+                    color: palevioletred
+                }
+            </style>
+        </head>
+    
+    External Stylesheet
+        <link rel="stylesheet" href="app.css">
+        h2 {
+            color:purple
+        }
+
+selector
+    universal selector      * {}
+    
+    element selector        select everything of a given type
+                                img {}
+    
+    selector lightness      h1, h2 {}
+    
+    id selector             #id-name {}
+    
+    class selector          .class-name {}                      all elements with class-name
+                            element.class-name {}               select only elements with class-name
+                            element[class="class-name"]         {}  attribute selector
+
+    combinators
+
+    descendant selector     li a {}                             select all <a> that are nested inside an <li> 
+                            .class a {}
+
+    adjacent selector       h1 + p {}                           select only <p> that are immediatley preceded by an <h1>. one after another. not nested.
+    
+    direct child            div > li {}                         select only <li>'s that are direct children of <div> 
+
+    attribure selector      input[type="text"] {}
+                            a[href*="google"] {}                any anchor tag with href that contains "google"
+                            a[href$=".org"] {}                  any anchor tag with href what ends wit ".org"
+
+
+pseudo classes
+        keywords added to selector that specifies a special state of the selected elements. are like states.
+    :active                 currently being activated. clicked but not released
+    :checked                radio, selection that are checked
+    :first
+    :first-child
+    :hover                  triggered when user overs of an element with cursor
+    :not()
+    :nth-child()
+    :first-of-type
+    :nth-of-type()          based on position among group of siblings. p:nth-of-type(4n)
+
+pseudo elements
+            keyword added to selector, let you style particular part of selected element(s)/pieces
+    ::after
+    ::before
+    ::first-letter
+    ::first-line 
+    ::selection                     when you select/highlight something
+
+property
+    
+    color                           text color
+    background
+        background-color
+        background-image
+        background-size
+        background-attachment
+        background-repeat
+    opacity                         [0,1], applies to entire element        
+
+    text-align                      how text is aligned within an element
+    text-decoration                 appearance of decorative lines on text
+    text-transform                  text case
+    
+    line-height                     vertical spacing of text
+    letter-spacing                  spacing between letters
+    
+    font-size                       
+    font-family                     fornt stack, ordered
+    font-weight                     control boldness/lightness
+
+    box model
+        everything in css is a box and each has a property
+        content box - blue
+            width                   of content box
+            height                  of content box
+
+            border                  shorthand property
+                                    border width style color
+                border-width            thickeness 
+                    border-left/right-width 
+                border-color        
+                    border-left/right-color
+                border-style            line style, dashed, solid, ...
+                border-radius           radius of corners, create circles
+                box-sizing              border-box, border within width and hieght
+
+            padding                 space between content box and border. green
+                padding-left/right
+                padding-bottom/top
+            
+            margin                  spacing outside of the border. orange
+                                    margin top right bottom left
+                px, auto
+    display
+        inline                      width & height are ignored. margin & padding push elements away horizontally not vertically.
+        block                       line break. width, heigth, margin & padding respected
+        inline-block                like inline except width, height, margin& padding respected    
+        flex                        main axis (x), cross axis (y)
+            flex-direction              row, row-reverse (right to left), column, column-reverse
+            flex-wrap                   wrap, wrap-reverse, no-wrap
+            flex                        flex-grow | flex-shrink | flex-basis (shorthand)
+                flex-basis                  initial size of element before additional space is distributed (along the main axis)
+                flex-grow                   amount of available space an element should take (unitless number)
+                flex-shrink                 if items are larger than container
+            justify-content             (along the main-axis) flex-start, flex-end, center, space-between, space-around 
+            align-items                 (along cross-axis) flex-start, flex-end, center, baseline (line from the bottom of letter)
+            align-content               (control distribute space along cross axis, when we have multiple rows/columns) space-between, space-around, flex-start, flex-end, center
+            align-self                  (applied to individual elements) 
+            min/max-width                   
+
+            flexbox 
+                one-dimensional layout method (series of properties) for laying out items in rows or columns
+                distribute space dynamically across elements (container (nav, div)) of an unkown size. flexible layouts
+
+    position                    sets how element is positioned in a document
+        static                      positioned according to normal flow of document
+        relative                    according to normal flow of docuemnt, then offset relative to itself based on values of `top`, `right`, `bottom`, `left`.
+        absolute                    removed from normal document flow, no space is created (doesn't take up any space in the document).
+                                        it's positioned relative to its closest "positioned ancestor" (position not set as static), if any; otherwise, it is placed relative to the initial contianeing block
+        fixed                       removed from normal document flow, no space is created for the element in page layout. positioned relative to initial containing block (ALWAYS, even when scrolling)               
+        sticky
+    
+    cursor
+
+    transition                      property name | duration | timing function | delay
+        transition-timing-fucntion              linear, ease-in, step(6, end), cubic-bezier()
+
+    transform
+        matrix-3d
+        perspective
+        rotate-3d-X-Y-Z
+            transform-origin
+        translate-3d-X-Y-Z
+        scale-3d-X-Y-Z
+        skew-X-Y
+    
+units
+    absolute
+        px, pt, cm in, mm
+    relative
+        %           percentage, relative to something
+                    width: 50% (of width of parent)
+                    line-width: 50% (of font-size/someother value of element)
+        em          relative units from parent'same
+        rem         relative to root <html> element's font-size
+
+
+
+media queries
+        modify styles depending on particular parameters like screen width or device type    
+    
+    @media
+        width, min/max-width
+                    @media (min-width: 360px) and (max-width: 800px) {
+                        div {
+                            color: red;
+                        }
+                    }
+        orientation
+        
+
+
+BOOTSTRAP   
+    components          pre-built, can be incorporated into own websites
+            predefined classes in bootstrap stylesheet
+            <button type="button" class="btn btn-primary">Primary</button>
+
+        container           contain, pad and center content within them
+                <div class="container"> --- </div>
+                <div class="container-fluid"> --- </div>        goes across the screen
+                see docs
+        button
+                <button type="button" class="btn btn-dark">Dark</button>
+                many types of buttons and cutomization, refer docs
+        button group  
+        typography
+                display-1, lead, block-quote, text-center, mb-0, blockquote-footer
+        borders
+        color
+        badges      like notifications/count
+        alert
+    grid system
+        custom reponsive layouts

@@ -1,0 +1,240 @@
+ Version
+    contents + metadata of file at given point in time
+
+Shell
+    program fro executing commands  
+    
+    pwd     current working directory
+    ls      -a (hidden files)
+    cd 
+    nano    open text editor, ctrl o save, ctrl x executing
+    echo    create/edit file, > write, >> append 
+        echo "REview for duplicate records" > todo.txt
+
+Commit  permanent storage
+    commit      contains metadata, has a hash
+    tree        tracks names, locations in repo
+    blob        for each file listed in the tree, compressed snapshot of file's contents
+        
+        
+Repository
+    files, directory, .git (git storage)
+
+    git init                    convert existing into a repo
+    git init reponame           creates folder reponame   
+    git status
+
+    git clone /home/john/localrepo [newreponame]        cloning local repo and giving optional name
+    git clone [URL]                                     also stores remote tag (original repo location) in new repo config
+    
+    git remote [-v]                                     print remote tag, when cloning, git automaically names the remote 'origin'
+    git remote add name URL                             add remote
+
+    git fetch <remote> <branch>                         retrieve updates from remote without applying to local 
+    git merge <remote> <branch>
+    git pull <remote> <branch>                          combination of fetch and merge
+
+    git push <remote> <local_branch>                    
+ 
+Staging - saving a draft 
+    
+    git add .
+    git add <file>
+
+    git status                  which files are in staging area and which aren't 
+    
+    git commit -m "message" 
+
+    git reset HEAD              unstage all files
+    git reset HEAD <file>       unstage a file
+
+Restore
+
+    git checkout .              undo changes to all unstaged stuff
+    git checkout -- <file>      undo changes to unstaged file to till the last commit, checkout=switching to a different version 
+    git checkout <hash> <file>  restore to specific commit
+    git checkout HEAD~1 <file>    
+    git checkout <hash>         restore repo to previous state  
+    git checkout HEAD~1
+
+    git clean -n                list files not being tracked
+    git clean -f                delete untracked files
+
+
+Compare     
+    last commited and current version comparision 
+    
+    git diff <file>             unstaged file vs last commit
+    git diff -r HEAD <file>     -r HEAD when added file to the staging area and want to compare to the most recent commit
+    git diff -r HEAD            compare multiple staged files with last commit
+    git diff -r HEAD~1          compare to second most recent commit, so on and so forth
+    git diff <hash1> <hash2>
+    git diff HEAD~5 HEAD~5
+
+History
+    
+    git log                 view commit information in chronological order
+            -<#results> --since="<month day year>" --until="<>" <filename>
+    git show <hash>
+    git show HEAD~3
+
+    git annotate <file>     hash author time line# content, who made the changes and when
+
+Version Control
+    systems and processes to manage changes made to documents, programs and directories
+    Branches
+            main
+            others
+        Merge
+            backward and forward
+
+Configure
+
+    git config --list
+        --local     settings for one specific project
+        --global    for all projects
+        --systems   for every user
+
+        git config --global setting value
+                    --global user.email johnsmith@datacamp.com
+
+        git config --globad alias.ci 'commit -m'        commit files by ci
+            so now we can commit using  git ci 
+
+        git config --global alias.unstage 'reset HEAD'    
+
+
+Ignoring Specific files
+    create .gitignore
+    *.log   ignore all files ending with .log
+
+Branches
+    systematically track multiple versions of files
+    when merging two branches, commits are called parent commits
+        `source` branch we want to merge from, `destination` we want to merge into
+
+    git branch                      list branches
+    git checkout otherbranch        switch branches
+    git checkout -b newbranch       create new branch
+    git diff main otherbranch       difference between two branches
+
+    git merge source destination
+    
+
+
+
+
+
+
+
+
+git
+    --version 
+
+    config 
+        git config --global user.name "Your Name"
+        git config --global user.email "your.email@example.com"
+ 
+    init        initialize
+    clone <link>
+        git clone https://github.com/username/repo.git
+    status      working directory status
+        git status
+    add         
+        git add file.txt    # Add files to statging area
+        git add .
+    commit 
+        git commit -m "Initial commit"
+    push
+        git push --set-upstream <remote_repo_name> <branch_name>    # --set-upstream, -u options -> sets tracking relationship
+        git push -u origin master
+        git push origin master
+        git push origin --delete old-branch
+    pull
+        git pull origin master  # Fetch Latest Changes from Remote 
+    fetch
+        git fetch   # fetch all branches from remote repo
+        git fetch origin
+        
+    branch
+        git branch      # list 
+        git branch -r   # list remote branches
+        git branch -a   # list all branches
+        git branch new-branch
+        git branch -d old-branch                    # delete branch
+        git branch -u origin/feature feature        # Create a new branch named 'feature' and set up tracking relationship with 'origin/feature'
+    checkout
+        git checkout master
+        git checkout new-branch     # Switch to a branch
+        git checkout -b new-branch  # Create and switch to a new branch in one step:
+
+    merge 
+        git merge new-branch
+            git checkout main   # Switch to the branch you want to merge into
+        git merge feature       # Merge the 'feature' branch into the 'main' branch
+    rebase
+        git rebase master
+        git checkout feature    # Switch to the branch you want to rebase
+        git rebase main         # Rebase 'feature' branch onto 'main' branch
+    reset 
+        git reset --soft HEAD~1
+        git reset --hard HEAD~1
+    revert
+        get revert HEAD
+    clean
+        git clean -f 
+    remote 
+        git remote add origin https://github.com/username/repo.git
+        git remote -v
+        git remote rm origin
+    tag
+        git tag
+        git tag -a v1.0 -m "Version 1.0"
+        git tag -d v1.0
+    stash
+    log 
+    diff 
+    blame 
+    show
+    archive 
+    cherry-pick 
+    submodule 
+    
+        --version
+
+    remote
+        remote add origin "link"
+    branch
+        <new_branch>
+        --all
+    
+    checkout
+        <branch_name>
+
+    add
+    commit --m <message>
+    
+    config
+        --global
+    rm
+        --cached -r
+
+    Example
+        git init
+        git add .
+        git commit -m ""
+        git remote add origin https://github.com/USERNAME/REPONAME.git
+        git push -u origin master
+
+gh
+    auth 
+        login
+    repo
+        create <name>
+            --public
+            --private
+            --clone
+        list
+	delete <USERNAME>/<REPONAME>
+    
+gh repo create Project --public

@@ -1,0 +1,68 @@
+www.sqlstyle.com/guide
+
+Order of Execution
+    FROM -> WHERE -> GROUP BY -> HAVING -> SELECT -> ORDER BY -> LIMIT
+
+Data Types    
+    CHAR
+    VARCHAR
+    INT
+    NUMERIC
+    DATE
+
+
+SELECT 
+    AS
+    DISTINCT
+    Aggregate Functions -> vertical/column
+        COUNT(field_name) -> exclude NULL values
+            SELECT COUNT(name) FROM people WHERE birthdate IS NOT NULL; --same as COUNT(name)
+        COUNT(*) -> include NULL values
+            SELECT COUNT(DISTINCT NAME) AS count_name
+        AVG(), SUM()
+        MIN(), MAX() -> can be used with strings
+        ROUND(number_to_round [, decimal_places])
+            ROUND(-, 0) -> whole number, ROUND(-, -5) -> roud five places to the left of demical
+    Arithmetic -> horizontal/record
+        +, -, *, /
+            SELECT 4 / 3; -> integer
+            SELECT 4.0 / 3.0; -> float
+            SELECT (gross - budget) AS profit FROM films;
+FROM <table/view>
+    LIMIT / TOP(n)
+
+WHERE <condition>
+    filters individual records
+    can't filter Aggregate functions with WHERE clauses because of order of execution
+        GROUP BY release_year WHERE COUNT(title) > 10 -> invalid
+    >, <, <=, >=, =, <>
+    OR, AND, BETWEEN - AND - between is inclusive
+        (- OR -) AND (-)
+        field = -- or field = --
+
+    LIKE, NOT LIKE, IN, % (match 0->many), _ (match single character)
+        WHERE name LIKE 'Anu%'
+        WHERE year IN (1920, 1930, 1940)
+
+ORDER BY <field>, <field_two>... -> ASC by default, and subsequent fields are secondary sorting keys for tie breaking `
+    ASC, DESC
+        WHERE - IS NOT NULL ORDER BY - DESC;
+
+GROUP BY -> use Aggregate Functions
+    single field 
+        SELECT certification, COUNT(title) as title_count FROM films GROUP BY certification
+    multiple fields
+        SELECT certification, language, COUNT(title) AS title_count FROM films GROUP BY certification, language;
+    with sorting
+        SELECT certification, COUNT(title) ____ GROUP BY certification ORDER BY title_count DESC;
+
+    HAVING <condition>
+        filter grouped records
+        GROUP BY release_year HAVING COUNT(title) > 10;
+CREATE
+    TABLE
+    VIEW
+        CREATE VIEW ---- AS SELECT ----- FROM -----;
+
+
+

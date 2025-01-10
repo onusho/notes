@@ -1,0 +1,121 @@
+HTML - what
+CSS - describe
+JS - how
+
+MDN 
+
+HTML 
+    markup language - format text and give it structure. browser knows the rules
+
+    Boilerplate
+        <!DOCTYPE html>     flag HTML5
+        <html>/              root element, top level
+            <head>/              document metadata header
+                <title>/            displayed in tab of browser, google search result
+            <body>/        content of dcument
+
+
+    Elements, Tags
+        paragraphs, headers, forms, buttons
+        
+        <!-- ... -->    comment
+        <h1>-<h6>/      header
+        <p>/            paragraph, grouping of content, take up a block
+        
+        <b>/            bring attention to, inline
+        <hr>            horizontal rule, line, divider
+        <br>            line break
+        <sup>/          superscript
+        <sub>/          subscript
+        <ol>/           ordered list, can nest lists ol, ul
+        <ul>/           unordered list
+        <li>/           list item
+        
+        <a>/            anchor, create hyperlink, inline
+                        href=   hyperlink
+                            <a href="https://www.google.com"> I am Link </a>
+        <img>           embed image
+                            <img src="" alt="" width="">
+                                alt :  text description of image
+
+
+
+        <div>/          block level, generic container to group elements, content division
+                            <div class="forCSS">...</div>
+        <span>/         inline, container
+        <main>/         main content
+        <header>/       
+        <footer>/       
+        <section>/      generic section
+        <nav>/          navigation
+        <article>/      self contained composition, independently reusable, distributable
+        <aside>/        sidebars, non-esssential
+        <time>/         inline
+                            <time datetime="2018-07-07">July 7</time>
+        <figure>/
+        <figurecaption>/
+        <blockquite>/
+
+        <table>/        represents tabular data
+        <caption>/
+        <td>/           cell of table, contains data/
+        <tr>/           table row
+        <th>/           table header
+                        rowspan=
+                        colspan=
+                            <th rowspan="2">
+                            <th colspan="2">
+        <thead>/        for semantics
+        <tbody>/
+        <tfoot>/
+
+        <form>/         represents a document section containing controls fro submitting information
+                        action="action"     where data should be sent
+                        method=     which HTTP method should be used. get. post
+                            <form action="/search"> 
+        <label>/        caption for an item 
+                        for="element_id"
+
+        <input>         create interactive controls, accept data, wide variety of types
+                        type=text, password, range, radio, checkbox
+                        placeholder=""
+                        name="name" when form submitted HTTP requent action?name=. Like some varable name
+                        id="unique-id" for labels
+                        min=,max,value,step
+                        required,minlength=,maxlength=,pattern
+        <button>/       type=button,reset,submit
+        <select>/       name=,id=
+        <option>/       value=, selected
+        <textarea>/     multiline text input
+                        rows=,cols=,id=,name=,placeholder=
+        
+        
+    Entities
+        for reserved characters/symbols
+
+        &   &amp;   
+        <   &lt;    &#60;
+        >   &gt;    &#62;
+        "   &quot;
+        '   &apos;
+            &nbsp;
+        -   &ndash;
+        _   &mdash;
+
+
+Emmet 
+    !           basic structure
+    >           child elements
+                    main>section>h1
+    +           sibling
+                    h1+h2+h3
+    ^           climbup, go back
+                    div+div>p>span+em^bq
+    *           multiplication
+                    ol>li*5
+    $           item numbering
+                    nav>ul>li*5>a[href=www.$.com]
+    []          for classes
+    {}          for text
+                    p>{Click}+a[href="www"]{here}+{ to continue}
+

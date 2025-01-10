@@ -1,0 +1,59 @@
+REST
+- Client-Server Architecture
+- Statelessness
+- Cacheability
+- Layered System
+- Code on Demand
+
+- Uniform Interface
+    Resource Identification in request
+    resource maniputlation through representations
+    Self-descriptive messages
+    hypermedia as the engine of application 
+
+
+RESTful API 
+    runs on HTTP
+
+Methods
+    GET
+        200, 404 
+    POST
+        create new resource and add it to a collection
+            201 ,401, 409, 404
+    PUT
+        update existing singleton resource based on ID 
+            200, 401, 404, 405  
+    PATCH
+        modify existing singleton resource based ID  
+            200, 401, 404, 405
+    DELETE
+        delete singleton resouce based on ID 
+            200, 401, 404
+    OPTIONS
+        get options available from the resource
+            200
+    HEAD
+        head section of options
+
+Status Codes
+    1xx information/status
+    2xx success
+        200 OK
+        201 Created
+        204 No Content
+    3xx redirection
+        301 moved permanently -> use this uri for all future requests
+        302/303 found at this other URL
+        307 temporary redirect 
+        308 resume incomplete/ permanent redirect 
+    4xx client error
+        400 bad request
+        401 unauthoried 
+        403 forbidden
+        404 not count
+        405 method not allowed 
+    5xx server errors
+        500 internal server error
+        502 bad gateway
+        503 service unavailable

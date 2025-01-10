@@ -1,0 +1,8 @@
+
+import os:
+	.path
+		.exists(path)
+		.join(path, other_path)
+	.listdir()
+	.makedirs()
+	.chdir()

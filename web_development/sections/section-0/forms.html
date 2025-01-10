@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms</title>
+</head>
+
+<body>
+    <header>
+        <nav><a href="home.html ">Back to Home</a></nav>
+    </header>
+
+    <body>
+        <h1>Forms</h1>
+        <button>Does Nothing!</button>
+        <section>
+            <form action="action">
+                <button type="button">Please Don't Submit</button>
+                <br><br>
+                <section>
+                    <label for="un-id">Enter Username:</label>
+                    <input type="text" placeholder="username" name="username" id="un-id">
+                </section>
+                <section><input type="checkbox" id="checkbox-id" name="checkbox"></section>
+
+                <section>
+                    <label for="password-input">Enter Password:</label>
+                    <input type="password" id="password-id" name="password">
+                </section>
+                <section><input type="radio" name="radio" id="radio-1" value="radio-1"><input type="radio" name="radio" id="radio-2" value="radio-2"><input type="radio" name="radio" id="radio-3" value="radio-3"></section>
+                <section>
+                    <label for="color-id">Pick Color</label>
+                    <input type="color" name="color" id="color-id">
+                </section>
+                <section>
+                    <label for="pet-select-id">Select Options</label>
+                    <select name="pets" id="pet-select-id">
+                        <option value="1">Option 1</option>
+                        <option value="2" selected>Option 2</option>
+                        <option value="3">Option 3</option>
+                        <option value="4">Option 4</option>
+                    </select>
+                </section>
+                <section>                    
+                    <label for="range-id">Select Range</label>
+                    <input type="range" id="range-id" min="1" max="10" step="2" name="level" value="75">
+                </section>
+                <section>
+                    <label for="number-id">Select Number</label>
+                    <input type="number" name="number" id="number-id" min="-5" max="5" value="0" step="2">
+                </section>
+                <br>
+                <label>File Input: <input type="file" name="file"></label>
+                <input type="button" value="clickMe!">
+                <hr>
+                <button type="reset">Reset</button>
+                <button>Submit</button>
+            </form>
+        </section>
+        <hr>
+        <h1>Reddit Search</h1>
+        <section>
+            <form action="https://www.reddit.com/search">
+                <label for="search-id">Search</label>
+                <input type="search" name="q" id="search-id">
+                <button type="submit">Search</button>
+            </form>
+        </section>
+
+        <h1>Google Search</h1>
+            <section>
+                <form action="https://www.google.com/search"><label for="gsearch-id">Search</label><input type="serach" name="q" id="gsearch-id"><button>Search</button></form>
+            </section>
+
+        <h1>Youtube Search</h1>
+        <section>
+            <form action="https://www.youtube.com/results"><input type="search" name="search_query">youtube search</input></form>
+        </section>
+
+    </body>
+</body>
+
+</html>
