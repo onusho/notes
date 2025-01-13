@@ -218,11 +218,21 @@ BOOTSTRAP
                 <button type="button" class="btn btn-dark">Dark</button>
                 many types of buttons and cutomization, refer docs
         button group  
+                <div class="btn-group" role="group"> ... <button.. <button.. <button..     
         typography
                 display-1, lead, block-quote, text-center, mb-0, blockquote-footer
         borders
         color
         badges      like notifications/count
         alert
+                <div class="alert alert-danger>... 
+    
     grid system
         custom reponsive layouts
+
+        container
+                <div class="container">...
+        row     every row has 12 units of space
+                <div class="row">...
+        col     every piece inside a row would be a column
+                <div class="cozl-6">...

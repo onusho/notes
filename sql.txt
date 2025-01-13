@@ -3,6 +3,8 @@ www.sqlstyle.com/guide
 Order of Execution
     FROM -> WHERE -> GROUP BY -> HAVING -> SELECT -> ORDER BY -> LIMIT
 
+Writing Order
+    select -> from -> join -> on -> where -> group by -> having -> order by -> limit
 Data Types    
     CHAR
     VARCHAR
@@ -11,8 +13,9 @@ Data Types
     DATE
 
 
-SELECT 
+SELECT  
     AS
+        can alias columns, tables
     DISTINCT
     Aggregate Functions -> vertical/column
         COUNT(field_name) -> exclude NULL values
@@ -64,5 +67,27 @@ CREATE
     VIEW
         CREATE VIEW ---- AS SELECT ----- FROM -----;
 
+Joins
 
+    Relationships
+        one-to-one
+            unique parings, finger print belongs to one person
+        one-to-many
+            single entity related to multiple entities like one author and many books
+        many-to-many
+            many languages can be spoken in many countries
+
+    INNER JOIN ... ON ... /USING(...)
+        looks for records in both tables which match on a given field
+        joins can be chained as well
+            SELECT <table>.<column_name>    FROM presidents INNER JOIN prime_ministers ON presidents.country = prime_ministers.country;
+            SELECT ... FROM presidents AS p1 INNER JOIN prime_ministers AS p2 ON p1.country = p2.country 
+            SELECT * FROM l INNER JOIN r ON l.id = r.id INNER JOIN l.id = a.id;
+    ON
+        can be supplied with multiple fields to join on
+            INNER JOIN ... ON l.id = r.id AND l.date = r.date
+    USING()
+        when both field names are same
+            SELECT ... FROM ... INNER JOIN .. USING(country)
+            
 
