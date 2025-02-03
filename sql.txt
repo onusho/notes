@@ -17,6 +17,7 @@ SELECT
     AS
         can alias columns, tables
     DISTINCT
+        uinique field values
     Aggregate Functions -> vertical/column
         COUNT(field_name) -> exclude NULL values
             SELECT COUNT(name) FROM people WHERE birthdate IS NOT NULL; --same as COUNT(name)
@@ -31,7 +32,11 @@ SELECT
             SELECT 4 / 3; -> integer
             SELECT 4.0 / 3.0; -> float
             SELECT (gross - budget) AS profit FROM films;
+    EXTRACT()
+         SELECT EXTRACT(MONTH FROM date) AS month, SUM(home_goal + away_goal) AS goals FROM match GROUP BY month
+        
 FROM <table/view>
+        SELECT lt.id, lv FROM lt, rt WHERE lt.id = rt.id
     LIMIT / TOP(n)
 
 WHERE <condition>
@@ -68,7 +73,8 @@ CREATE
         CREATE VIEW ---- AS SELECT ----- FROM -----;
 
 Joins
-
+    combine rows from two or more tables based on related column between them
+    Additive Joins, new fields are added to the result set
     Relationships
         one-to-one
             unique parings, finger print belongs to one person
@@ -79,6 +85,7 @@ Joins
 
     INNER JOIN ... ON ... /USING(...)
         looks for records in both tables which match on a given field
+        field which have matching values in both tables
         joins can be chained as well
             SELECT <table>.<column_name>    FROM presidents INNER JOIN prime_ministers ON presidents.country = prime_ministers.country;
             SELECT ... FROM presidents AS p1 INNER JOIN prime_ministers AS p2 ON p1.country = p2.country 
@@ -89,5 +96,104 @@ Joins
     USING()
         when both field names are same
             SELECT ... FROM ... INNER JOIN .. USING(country)
-            
+    
+    LEFT JOIN / LEFT OUTER JOIN
+        all records in left table, and machted records in the right table that match the left one
+            FROM p1 LEFT JOIN p2 USING(country)
+    
+    RIGHT JOIN / RIGHT OUTER JOIN
+        all records in right table, matched entries from the left table
+        can always be rewritten as LEFT JOIN
+            FROM lt RIGHT JOIN rt ON lt.id = rt.id
+
+    FULL JOIN  / FULL OUTER JOIN
+        combines left and right join
+            FROM lt FULL JOIN rt USING(id);
+    
+    CROSS JOIN 
+        all possible combinations of, ON not needed 
+            FROM t1 CROSS JOIN t2 WHERE p1.cont IN ('Asia') AND p2.cont IN ('South')
+
+    SELF JOIN
+        tables joined with themselves, can be used to compare parts of the same table
+        don't have dedicated syntax, aliasing is required
+            SELECT p1.country As country1, p2.country AS country2, p1.continent FROM prime_ministers AS p1 INNER JOIN prime_ministers AS p2 ON p1.continent = p2.continent AND p1.country <> p2.country;
+
+    
+
+    
+
+Set Operations
+    stack fields on top of one another
+    number of selected columns and their datatypes must be identical 
+    result will use field names/aliases of the first select statement in the query
+    can even be used to re-write JOIN operations  
+        
+        UNION
+            takes two tables as input and returns all records from both tables
+                SELECT monarch AS leader, country FROM monarchs UNION SELECT prime_minister, country FROM prime_ministers ORDER BY country, leader LIMIT 10;
+        
+        UNION ALL 
+            will include duplicate records
+        
+        INTERSECT
+            two tables and returns only records that exist in both tables 
+                SELECT .. FROM .. INTERSECT SELECT .. FROM ...;
+        
+        EXCEPT
+            records in the left table that are not presesnt in the right table 
+                SELECT ... FROM .. EXCEPT SELECT ... FROM ...;
+
+
+Sub Queries 
+    query nested inside another query, can be placed in any part of a query like (SELECT, FROM, WHERE, GROUP BY)
+    can return scalar, list, table, compare groups to summarized values, reshaping data, combine data that cannot be joined
+    processed before the main query. filtering the main/sub query only filters the main/sub query  
+    properly format, annotate (/*with comments*/ --), properly indent your queries        
+
+        inside FROM
+                SELECT col FROM (SELECT col FROM TABLE) AS subquery;
+        Using WHERE
+                SELECT home_goal FROM match WHERE home_goal > (SELECT AVG(home_goal) FROM match) 
+                SELECT * FROM table WHERE field IN (subquery);
+        inside SELECT (must return single value)    
+                SELECT DISTINCT continent, (SELECT COUNT(*) FROM monarchs WHERE states.continent = monarch.continent) AS monarch_count FROM states;
+        Subqueries inside FROM
+            SELECT DISTINCT monarchs.continent, sub.most_recent FROM monarchs, (SELECT continent, MAX(indep_year) AS most_recent FROM states GROUP BY contitnent) AS sub WHERE monarchs.continent = sub.continent
+        
+        Correlated Subqueries
+            values from the outer query to generate result, re-run for every row generated in the final dataset. dependent on the the main query execution
+            used for advanced joining, filtering, evaluating data
+                SELECT ... FROM (SELECT AVG(...) FROM match WHERE season= ... GROUP BY stage) AS s WHERE s.avg_goals > (SELECT AVG(...) FROM match AS m WHERE s.stage > m.stage)
+                SELECT name, (SELECT AVG(home_goal + away_goal) FROM match WHERE m.country_id = c.id) AS avg_goals FROM country AS c GROUP BY name
+        
+        Nested Subqueries
+                SELECT EXTRACT(MONTH FROM date) AS month, SUM(m.home_goal + m.away_goal) - (SELECT AVG(goals) FROM (SELECT EXTRACT(MONTH FROM date) AS month, SUM(home_goal + away_goal) AS goals) FROM match GROUP BY month AS s) AS diff FROM match as m GROUP BY month; 
+            Correlated Nested Subqueries
+                    SELECT c.name AS country, (SELECT AVG(home_goal + away_goal) FROM match AS m WHERE m.country_id = c.id AND id IN (SELECT id FROM match WHERE season = '...')) AS avg_goals        Semi Join 
+            uses where clause to choose records in the first table where a condition is met in the second table. no new columns are added
+                SELECT ... FROM presidents WHERE country IN (SELECT country FROM states WHERE indep_year < 1800); 
+                SELECT * FROM econ2019 WHERE code IN (SELECT code FROM econ2015 WHERE gross_savings < 22.5);
+        
+        Anti Join
+            SELECT ... FROM presidents WHERE continent LIKE '%America' AND country NOT IN (SELECT country FROM states WHERE indep_year < 1800);
+    
+
+CASE WHEN [AND] THEN ... ELSE END AS 
+    if this then that in sql. create columns with certain values depending on conditions
+    
+    used in SELECT statement for categorizing data
+        SELECT ..., CASE WHEN home_goal > away_goal THEN 'Home Team Win' WHEN home_goal < away_goal THEN 'Away Team Win' ELSE 'Tie' END AS outcome FROM match WHERE season = '2013';
+        SELECT CASE WHEN hometeam_id = 10189 THEN 'FC Schalke 04' WHEN hometeam_id = 9823 THEN 'FC Bayern Munich' ELSE 'Other' END AS home_team, COUNT(id) AS total_matches FROM matches_germany GROUP BY home_team;
+        SELECT date, CASE WHEN home_goal > away_goal THEN 'Home win!' WHEN home_goal < away_goal THEN 'Home loss :(' ELSE 'Tie' END AS outcome FROM matches_spain;
+
+    used in WHERE for filtering data
+        SELECT date, season CASE WHEN id = ... AND ... > ... THEN "..." .....  AS outcomeFROM match_table WHERE CASE WHEN id .... END IS NOT NULL;
+        SELECT * FROM table WHERE  CASE WHEN a > 5 THEN 'Keep' WHEN a <= 5 THEN 'Exclude' END = 'Keep';
+        ... WHERE CASE WHEN hometeam_id = 9857 AND home_goal > away_goal THEN 'Bologna Win' WHEN awayteam_id = 9857 AND away_goal > home_goal THEN 'Bologna Win' END IS NOT NULL
+    
+    used for aggregating data CASE WHEN with COUNT, SUM, AVG
+        SELECT season, COUNT(CASE WHEN home_id = 8650 AND home_goal > away_goal THEN id END) AS home_wins FROM match GROUP BY season;
+        ... SUM(CASE WHEN home_id = 8650 THEN home_goal END) AS home_goals ...
+        ... AVG(CASE WHEN away_id = 8650 AND home_goal > away_goal THEN 1 ... THEN 0) AS percentage_home_wins
 
