@@ -18,7 +18,7 @@ SELECT
         can alias columns, tables
     DISTINCT
         uinique field values
-    Aggregate Functions -> vertical/column
+    Aggregate Functions -> vertical/column, must use GROUP BY
         COUNT(field_name) -> exclude NULL values
             SELECT COUNT(name) FROM people WHERE birthdate IS NOT NULL; --same as COUNT(name)
         COUNT(*) -> include NULL values
@@ -197,3 +197,48 @@ CASE WHEN [AND] THEN ... ELSE END AS
         ... SUM(CASE WHEN home_id = 8650 THEN home_goal END) AS home_goals ...
         ... AVG(CASE WHEN away_id = 8650 AND home_goal > away_goal THEN 1 ... THEN 0) AS percentage_home_wins
 
+Common Table Expressions (CTE)
+    executed only once and stored in memory so better performance
+    great for organizing many queries
+    cte's can reference and use other cte's that are delared above 
+    special type of subquery that are declared ahead of main query for improving readability
+    table declared using WITH name AS (subquery) before the main query and accessed using FROM             
+    
+    WITH ... AS (subquery)
+        WITH cte AS (SELECT col1, col2 FROM table)
+        SELECT AVG(col1) AS avg_col FROM cte; 
+    
+    can declare multiple CTE subquries 
+        WITH cte1 AS (subquery), cte2 AS (subquery)    
+
+    following can be written as below SELECT c.name AS country, COUNT(s.id) AS matches FROM country AS c INNER JOIN (SELECT ... FROM match WHERE...) ON ...
+        WITH s AS (SELECT country_id, id FROM match WHERE (home_goal + away_goal) >= 10)
+        SELECT c.name AS country, COUNT(s.id) AS matches FROM country AS c INNER JOIN s ON c.id = s.country_id GROUP BY country;
+
+    can reference itself (SELF JOIN)
+
+Window Functions
+    aggregate functions require you to GROUP BY all the no aggregate fields that appear in SELECT clause
+        SELECT f1, f2, f3, COUNT(f4) .... GROUP BY f1 -> will return error cuz we must GROUP BY f1, f2, f3
+    
+    perfom calculations on already generated result set (a window)
+    can perform aggregate calc without grouping, running totals, ranking, moving averages
+    processed after every part of query except ORDER BY, uses the result set rather than database
+
+    OVER()
+        SELECT date, (home_goal + away_goal) AS goals, AVG(home_goal + away_goal) OVER() AS overall_avg FROM match WHERE season='2011/2012';
+    RANK()
+        SELECT date, (home_goal + away_goal) AS goals, RANK() OVER(ORDER BY home_goal + away_goal DESC) AS goals_rank FROM match WHERE season = '2011/2012'
+        RANK() OVER(ORDER BY ABS(home_goal - away_goal) DESC) AS match_rank
+    PARTITION BY 
+        calculate separate values for different categories and different calculations in the same column
+            AVG(home_goal) OVER(PARTITION BY season)
+            SELECT date, (home_goal + away_goal) As goals, AVG(home_goal + away_goal) OVER(PARTITON BY season) AS season_avg FROM match
+        can also partition by multiple columns
+            SELECT ... AVG(home_goal + away_goal) OVER(PARTITION BY m.season, c.name) AS season_ctry_avg FROM country AS c LEFT JOIN match AS m ON c.id = m.country_id;
+    ROWS BETWEEN <start> AND <finish>   
+        sliding windows perform calculations relative to current row. running totals, sums, averages
+            ROWS BETWEEN <start> AND <finish>   
+            PRECEDING, FOLLOWING, UNBOUNDED PRECEDING, UNBOUNDED FOLLOWING, CURRENT ROW
+                SUM(home_goal) OVER(ORDER BY date ROWS BETWEEN UNBOUNDED PRECEING AND CURRENT ROW) AS cumulative_sum
+                SUM(home_goal) OVER(ORDER BY date ROWS BETWEEN 1 PRECEDING AND CURRENT ROW) AS last2

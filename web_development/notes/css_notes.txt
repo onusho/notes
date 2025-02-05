@@ -1,7 +1,7 @@
 selector {
     property: value;
 }
-x
+
 input[type="text"]:nth-of-type(2n) {
     border: 2px solid red;
 }
@@ -206,32 +206,43 @@ media queries
 
 
 BOOTSTRAP   
-    
-    components          pre-built, can be incorporated into own websites
+    besides the basics the best approach would be to build projects using bootstrap and refer to documentation for everything
+
+    components          
+        pre-built, can be incorporated into own websites
             predefined classes in bootstrap stylesheet
             <button type="button" class="btn btn-primary">Primary</button>
 
-        container           contain, pad and center content within them
-                <div class="container"> --- </div>
-                <div class="container-fluid"> --- </div>        goes across the screen
-                see docs
-        button
-                <button type="button" class="btn btn-dark">Dark</button>
-                many types of buttons and cutomization, refer docs
+    container           
+        contain, pad and center content within them
+            <div class="container"> --- </div>
+            <div class="container-fluid"> --- </div>        goes across the screen
+            see docs
+    button
+        many types of buttons and cutomization, refer docs
+            <button type="button" class="btn btn-dark">Dark</button>
         button group   
                 <div class="btn-group" role="group"> ... <button.. <button.. <button..     
-        typography
-                display-1, lead, block-quote, text-center, mb-0, blockquote-footer
-        borders
-        color
-        badges      like notifications/count
-        alert
-                <div class="alert alert-danger>... 
-        reponsive images 
-            scales with parent element 
-                <div class="col-xl-4 col-md-6 col-"><img scr="..." class="img-fluid" alt="Responsive Image"> </div>
-    
-    grid system
+    typography
+            display-1, lead, block-quote, text-center, mb-0, blockquote-footer
+    borders
+    color
+    badges      like notifications/count
+    alert
+            <div class="alert alert-danger>... 
+    reponsive images 
+        scales with parent element 
+            <div class="col-xl-4 col-md-6 col-"><img scr="..." class="img-fluid" alt="Responsive Image"> </div>
+    shadow
+    spacing, margin, padding
+        {property}-{sides}-{size}
+        m   set margin 
+        p   set padding 
+    cards
+    carousel
+    dropdown menus
+
+    Grid System
         custom reponsive layouts where the division of space changes with screen size
         
         container
@@ -266,10 +277,10 @@ BOOTSTRAP
                     <div class="col-md-6 col-xl-3 bg-info">    
 
     Forms
-        form-group
+        .form-group
             used to group together label, controls, input, optional help text and form validation and applies some margin
                 <div class="form-group><label ...><input class="form-control"...>...</div> 
-        form-control
+        .form-control
             what we up on the <input ...>
                 <input type="email" class="from-control" id="exampleInputEmail" aria-describedby="emailHelp">
                 <select class="form-control" name="state" id="state">
@@ -295,6 +306,11 @@ BOOTSTRAP
             "form-row"
                 just changes the default spacing/gutter size so that forms are more compact
     
+        .input-group
+            .input-group-prepend
+                .input-group-text
+
+                <div class="input-group"><div class="input-group-prepend"><span class="input-group-text">$</span></div>
     Navbars
 
         <nav class="navbar navbar-light bg-light">
@@ -313,5 +329,8 @@ BOOTSTRAP
 
         .nav-item
         .nav-link, .active, .disabled
+
+        .fixed-top
+
 
 

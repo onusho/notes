@@ -37,8 +37,7 @@ HTML
         <img>           embed image
                             <img src="" alt="" width="">
                                 alt :  text description of image
-
-
+        <svg>           support vector graphics
 
         <div>/          block level, generic container to group elements, content division
                             <div class="forCSS">...</div>
