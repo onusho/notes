@@ -1,252 +1,468 @@
+Basics
+    REPL - read evaluate print loop
 
-REPL - read evaluate print loop
+    Running Code
+        using browser console
+        .js => .html
+            include script in html files inside <head> or <body>
+            <head>... <script src="app.js"></script>
 
-Running Code
-    using browser console
-    .js => .html
-        include script in html files inside <head> or <body>
-        <head>... <script src="app.js"></script>
+    Variables
+        variables can change type and references for literals, objects
+            let name = 23; name = false; //is valid
 
-Variables
-    variables can change type and references for literals, objects
-        let name = 23; name = false; //is valid
+        var 
+            older way before 'let' and 'const'
+                var someName = value; 
+        let
+            let someName = value;
+        const
+            const pi = 3.141;
+            const arr = []      always points to the same reference, so shell may remain the same but contents can change
+        
+        Scope
+            function and block scope
+                let     follows scoping rules
+                var     globally scoped
+    Data Structures
+        Primitive Types
+            Number
+                NaN     not a number    0/0, 
+            String
+                "", ''
+                zero-indexed
+                immutable
+                    str[index]
+                    str.length                      accessing property
+                    str1 + str2                     concatanation
+                    21 + "string" => "21string"     auto typecasting
+                    Methods    
+                        str.toUpperCase()               returns String, doen't modify original
+                        str.trim()                      remove white space
+                        str.indexOf('cat')              -1 if not found
+                        str.slice(star, end)            retuns new string
+                        str.replace('teehee', 'haha')   only replaces first instance
+                        str.repeat()
+                    Template literals
+                        use backticks `${evaluate expression}`
+                            `some string ${3 + 4} thing`         templace literals                   
+            Boolean 
+                false, 0, "", null, undefined, NaN
+                true, everything else is truthy  
+            null  
+                intentional absence  
+            Undefined
+                variables that do not assigned value
+            Symbol
+            BigInt
 
-    var 
-        older way before 'let' and 'const'
-            var someName = value; 
-    let
-        let someName = value;
-    const
-        const pi = 3.141;
-        const arr = []      always points to the same reference, so shell may remain the same but contents can change
-    
-Data Structures
-    Primitive Types
-        Number
-            NaN     not a number    0/0, 
-        String
-            "", ''
-            zero-indexed
-            immutable
-                str[index]
-                str.length                      accessing property
-                str1 + str2                     concatanation
-                21 + "string" => "21string"     auto typecasting
-                Methods    
-                    str.toUpperCase()               returns String, doen't modify original
-                    str.trim()                      remove white space
-                    str.indexOf('cat')              -1 if not found
-                    str.slice(star, end)            retuns new string
-                    str.replace('teehee', 'haha')   only replaces first instance
-                    str.repeat()
-                Template literals
-                    use backticks `${evaluate expression}`
-                        `some string ${3 + 4} thing`         templace literals                   
-        Boolean 
-            false, 0, "", null, undefined, NaN
-            true, everything else is truthy  
-        null  
-            intentional absence  
-        Undefined
-            variables that do not assigned value
-        Symbol
-        BigInt
-
-    Array
-        resizable, can contain mix of data Types
-        copy ops create shallow copies
-            let name = [];
-        nested array
-            const arr = [[,], [,]]
-        properties
-            arr.length
-        methods
-            .push()         add to end
-            .pop()          remove from end
-            .shift()        remove from start
-            .upshift()      add to start
-            .contact()      merge arrays
-            .includes()     look for value
-            .indexOf()      
-            .join()         create string from arrays
-            .reverse()      
-            .slice(start, end)                      copies a portion on an array, returns shallow copy
-            .splice(start, [,deleteCount])          in-place, changes contents of array by removes/replaces elements
-            .sort()                                 in-place, converts elements into strings then compares their UTF-16 code unit values 
-                .sort(function(a, b) {return a - b})    ascending
-                .sort(function(a, b) {return b - a})    descending 
-            .toStored()                             not in-place 
-    
-    Objects Literal
-        collections of properties (key-value pair). to access data we use custom keys
-        all keys are converted to strings (except Symbols)
-        declaring
-            const objectLiteral = {
-                key : value,        // property
-            }
-        accessing data
-            objectLiteral[key], objectLiteral["key"]  
-            objectLiteral.key
-        Object.keys(objectLiteral)      retuns array of key strings
-        Object.values(...)
-        Object.entries(...)             properties
-
-Operators
-    comparisions
-        ==      checks value not type, coerces both values to the same type
-                7=='7'; 0 == ''; null==Undefined
-        ===     check value and type
-
-        compares references in memory
-    logical 
-        &&, ||, !
-    typeof
-        operator retuns string indicating type of operands value    
-
-Some Objects and Methods
-    window 
-        top level object
-    Math
-        object contains static properties and methods for mathematics
-        Math.random()       [0, 1)
-    
-    console.log()
-        prints arguments to console, useful when working with files
-
-    alert()
-        pops up alert in browser
-    
-    prompt()
-        pops up alert and asks for input
-
-    parseInt(string)
-        converts numberr in String to Number
-
-Conditional
-    if (condition) {expressions} else if () {} else {}
-    switch (variable) { case 1: expression; break; .... default: expression}}
-
-Loops
-    for ([initialExpression]; [condition]; [incrementExpression])
-    while (condition) {}
-    for (... of ...) {}
-        for (let element of array) {...}
-    for (... in ...) {}
-        for (let key in objectLiteral) {objectLiteral[key]}
-    break
-
-Functions
-    functions are objects behind the scenes we can store them and pass them around (argmuments, return them)
-        function funcName(arguments) {
-            reuturn something;
-        } 
-
-    function expressions
-        storing function inside a variable
-            const square = function (num) {
-                return num * num;
-            }
-            square(7);
-
-    Arrow Functions
-        syntactically compact alternative to regular function expression
-            const add = (x, y) => {
-                return x + y;
-            }
-            const rollDie = () => {             // empty () for no args
-                return Math.floor....
-            }
-            const square = num => {             // if only one arg then () optional
-                return num * num 
-            }
-        Implicit Return 
-            const isEven = num => (                     // instead of {} use () for implicit return
-                num % 2 === 0                           // implicit return
-            )
-            const isEven = num => num % 2 === 0;        // one-liner implicit return
-
-    higher order functions
-        accept other functions as arguments, return a function (factory functions)
-            function callTwice(func) {
-                func();
-                func();
-            }
-            const rollDie = function() {Math.floor(Math.random * 6); console.log(roll)}
-            callTwice(rollDie)
+        Array
+            resizable, can contain mix of data Types
+            copy ops create shallow copies
+                let name = [];
+            nested array
+                const arr = [[,], [,]]
+            properties
+                arr.length
+            methods
+                .push()         add to end
+                .pop()          remove from end
+                .shift()        remove from start
+                .upshift()      add to start
+                .contact()      merge arrays
+                .includes()     look for value
+                .indexOf()      
+                .join()         create string from arrays
+                .reverse()      
+                .slice(start, end)                      copies a portion on an array, returns shallow copy
+                .splice(start, [,deleteCount])          in-place, changes contents of array by removes/replaces elements
+                .sort()                                 in-place, converts elements into strings then compares their UTF-16 code unit values 
+                    .sort(function(a, b) {return a - b})    ascending
+                    .sort(function(a, b) {return b - a})    descending 
+                .toStored()                             not in-place 
             
-            function makeMysteryFunc() {
-                return function () {
-                    ...
+            Array Callback Methods
+                .foreach()
+                    accepts a callback function. calls the function once per element in the array
+                        nums.forEach(function (n) {
+                            console.log(n * n)
+                        })
+                        movies = [{...}, {...}, {...}]          // array of dictionaries
+                        movies.forEach(function(movie) {
+                            console.log(`${movie.title} - ${movie/score}/100`)
+                        })
+                .map()
+                    returns new array with results of calling a callback on every element in the array
+                        const titles = movies.map(function(movie) {
+                            return movie.title.toUpperCase();
+                        }) 
+                        const newMovies = movies.map(movie => (`${movie.title} - ${movie.score / 10}`))
+                .filter()
+                    creates new array with all elements that pass the test impplemented by the provided function 
+                        const odds = nums.filter(n => (n % 2 === 1))
+                        const titles = movies.filter(m => m.score > 80).map(m => m.title)
+                .some()
+                    returns true if any of the array elements pass the text function
+                        words.some(word => (word.length > 4))
+                        words.some(w => w.includes('cake'))
+                .every()
+                    return true if all elements pass test function
+                        exams.every(score => score >= 75)
+                .reduce()
+                    executes a reducer functin on each element of the array resulting in a single value
+                    in order, passing in the return value from the calculation on the preceding element
+                    first time callback is run there is no return value of the previous calculation, but initial value may be supplied
+                    otherwise index 0 is used as initial value and iteration strats from index 1
+                        reduce(callbackFn, [initialValue])
+                    callbackFn
+                        its return value becomes value of accumulator parameter in next invocation
+                            const initialValue = 0;
+                            const sumWithInitialValue = nums.reduce(
+                                (accumulator, currentValue) => accumulator + currentValue, 
+                                initialValue
+                            );
+                            const minPrice = prices.reduce((min, price) => {
+                                if (price < min) {
+                                    return price;
+                                }
+                                return min;
+                            })
+
+        Objects Literal
+            collections of properties (key-value pair). to access data we use custom keys
+            all keys are converted to strings (except Symbols)
+            declaring
+                const objectLiteral = {
+                    key : value,        // property
                 }
-            }
+            accessing data
+                objectLiteral[key], objectLiteral["key"]  
+                objectLiteral.key
+            Object.keys(objectLiteral)      retuns array of key strings
+            Object.values(...)
+            Object.entries(...)             properties
 
+    Operators
+        comparisions
+            ==      checks value not type, coerces both values to the same type
+                    7=='7'; 0 == ''; null==Undefined
+            ===     check value and type
 
+            compares references in memory
+        logical 
+            &&, ||, !
+        typeof
+            operator retuns string indicating type of operands value    
 
-    Methods
-        function that is a property to an object
-            const math = {
-                multiply : function(x, y) {
-                    return x * y;
-                },
-                add : function(x, y) { 
-                    return x / y;
-                },
-                PI : 3.14159
-            }
+    Some Objects and Methods
+        window 
+            top level object
+        Math
+            object contains static properties and methods for mathematics
+            Math.random()       [0, 1)
+        
+        console.log()
+            prints arguments to console, useful when working with files
 
-        shorthand
-            const math = {
-                blah : 'Hi!',
-                add(x, y) {
+        alert()
+            pops up alert in browser
+        
+        prompt()
+            pops up alert and asks for input
+
+        parseInt(string)
+            converts numberr in String to Number
+
+    Conditional
+        if (condition) {expressions} else if () {} else {}
+        switch (variable) { case 1: expression; break; .... default: expression}}
+
+    Loops
+        for ([initialExpression]; [condition]; [incrementExpression])
+        while (condition) {}
+        for (... of ...) {}
+            for (let element of array) {...}
+        for (... in ...) {}
+            for (let key in objectLiteral) {objectLiteral[key]}
+        break
+
+    Functions
+        functions are objects behind the scenes we can store them and pass them around (argmuments, return them)
+            function funcName(arguments) {
+                reuturn something;
+            } 
+
+        function expressions
+            storing function inside a variable
+                const square = function (num) {
+                    return num * num;
+                }
+                square(7);
+
+        Arrow Functions
+            syntactically compact alternative to regular function expression
+                const add = (x, y) => {
                     return x + y;
-                },
-                multiply(x, y) {
-                    return x * y;
                 }
-            }
+                const rollDie = () => {             // empty () for no args
+                    return Math.floor....
+                }
+                const square = num => {             // if only one arg then () optional
+                    return num * num 
+                }
+            Implicit Return 
+                const isEven = num => (                     // instead of {} use () for implicit return
+                    num % 2 === 0                           // implicit return when only one line 
+                )
+                const isEven = num => num % 2 === 0;        // one-liner implicit return
 
-        this 
-            access other properties on the same object
-                const person = {
-                    first : 'Anush',
-                    last : 'Verma',
-                    fullName() {
-                        return `${this.first} ${this.last}`
+        Higher Order Functions
+            accept other functions as arguments and/or return a function (factory functions)
+                function callTwice(func) {
+                    func();
+                    func();
+                }
+                const rollDie = function() {Math.floor(Math.random * 6); console.log(roll)}
+                callTwice(rollDie)
+                
+                function makeMysteryFunc() {
+                    return function () {
+                        ...
                     }
                 }
-            depends on the invocation context of the function it is used in
-            not the same because this doen't have parent object but refers to Window Object (parent object)
-                const namePrinter = person.fullName 
-                person.fullName()
-                namePrinter()               // 
-    
+
+            Callbacks
+                is the function passed into another function (higher order functions) as argument, which is then invoked inside the outer function to complete some kind to routine or action
+
+                    setTimeout()
+                        sets timer which executes a function/code once timer expires
+                            setTimeout(code/fucntionRef, [delay])
+                            setTimeout(() => {console.log("Hello")}, 3000) 
+                    setInterval()
+                        repeatedly calls function/code with fixed time delay between each call, returns interavl ID   
+                            const intervalID = setInterval(myCallback, 500, "Parameter 1", "Parameter 2");
+                            function myCallback(a, b) {
+                                // Your code here
+                                // Parameters are purely optional.
+                                console.log(a);
+                                console.log(b);
+                            }
+                        clearInterval()
+
+        Methods            
+            function that is a property to an object
+                const math = {
+                    multiply : function(x, y) {
+                        return x * y;
+                    },
+                    add : function(x, y) { 
+                        return x / y;
+                    },
+                    PI : 3.14159
+                }
+
+            shorthand
+                const math = {
+                    blah : 'Hi!',
+                    add(x, y) {
+                        return x + y;
+                    },
+                    multiply(x, y) {
+                        return x * y;
+                    }
+                }
+
+            this 
+                access other properties on the same object
+                    const person = {
+                        first : 'Anush',
+                        last : 'Verma',
+                        fullName() {
+                            return `${this.first} ${this.last}`
+                        }
+                    }
+                depends on the invocation context of the function it is used in
+                not the same because this doen't have parent object but refers to Window Object (parent object)
+                    const namePrinter = person.fullName 
+                    person.fullName()
+                    namePrinter()               // 
+                
+                works differently for Arrow Functions, within them `this` refers to Window Object not the parent object
+        
+        Defual Parameters
+            should appear after non-default params
+                function multiply(a, b = 1) {
+                    return a * b;
+                }
+            older way
+                function multiply(a, b) {
+                    b = typeof b !=== undefined ? b : 1;
+                    return a * b;
+                }
 
 
-Scope
-    function and block scope
-        let     follows scoping rules
-        var     globally scoped
+        Spread (...name)
+            allows iterable (array) to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected,
+            or an object expression to be expanded in places where zero for more key-value pairs (for object literals) are expected
+                Math.max(13, 3, 5, 6, 7, 21 ,754, 2)        // valid
+                Math.max(nums)                              // returns NaN, because we passed an array
+                Math.max(...nums)                           // spreads out array to seperate arguments, to function calls
+            each element passed as a seperate argument 
+                console.log(...'hello') -> console.log('h', 'e', ...)
 
-Try/Catch Exception Handling
-    try {
-        hello.toUpperCase();
-    } catch (e) {
-        console.log(e);
-    }
+            can be used to hard-copy the contents of an array 
+                const nums = [...nums1, ...nums2]
+                [..."hello"] -> ['h', 'e', ...]
+            
+            used for object literals, when some keys overlap then whichever comes first takes precedence
+                const catDog = {...feline, ...canine}
+                {...feline, height: 54}                 // when copying, can add new properties
+                {...[2, 4, 6, 8]}                       // from arrays
+                {..."HIII"}                             // keys are numbered starting from zero
 
-Callbacks & Array Methods
-    .foreach()
-        accepts a callback function. calls the function once per element in the array
-            nums.forEach(function (n) {
-                console.log(n * n)
-            })
-            movies = [{...}, {...}, {...}]          // array of dictionaries
-            movies.forEach(function(movie) {
-                console.log(`${movie.title} - ${movie/score}/100`)
-            })
-    .map()
-        returns new array with results of calling a callback on every element in the array
-            const titles = movies.map(function(movie) {
-                return movie.title.toUpperCase();
-            }) 
+        arguments Object 
+                contains all arguments passed to the function
+                array-like object (but not array), with length property but does not have array methods  
+                available inside every fucntion except arrow functions 
+                    function sumAll() {
+                        let total = 0;
+                        for (let i = 0; i < arguments.length; i++) {
+                            total += arguemnts[i];
+                        }
+                        return total;
+                    }
+                    sumAll(8, 4, 3, 2);
 
+        Rest 
+            collects all remaining arguments into an actual array 
+                fumnction sumAll(previous, ...rest_nums) {
+                    for (let n of rest_nums) {
+                        ---
+                    }
+                }
+
+        Destructuring
+            unpack values from arrays, properties from objects into distinct variables
+                const socres = [---];                               // many elements
+                const [gold, silver] = scores;                      // gold will take first value, silver will take second
+                const [gold, silver, ...everythingElse] = scores    // everythingElse will take the remaining values
+            
+            when destructuring objects variable names should overlap original key names unless we want to rename them as shown below
+                const user = {---}
+                const {email} = user                                // = user.email
+                const {original_key_name: renamed_key_name} = user  // const renamed_key_name = user.born
+            
+            fallback/default value. died is not a key in user but we can define it, otherwise it would be 'undefined'
+                const {city, state, died = 'N/A'} = user            
+
+            parameter destructuring during function definition
+                const fullName = ({first, last}) => {return `${first} ${last}}
+                const runner = {first: -, last: -, country: -}
+                fullName(runner)
+
+
+
+
+
+    Try/Catch Exception Handling
+        try {
+            hello.toUpperCase();
+        } catch (e) {
+            console.log(e);
+        }
+
+
+
+Document Object Model 
+    JS representation of a webpage, JS "window" into the contents of a webpage
+    bunch of objects that you can interact with via JS
+    html+css go in JS objects come out as a Tree Structure
+
+    document object
+        contains representations of all the content on a page, plus tons of useful methods and properties 
+            cosole.dir(document)
+        we first select elements and then manipulate them
+        
+        .createElement()
+            const newImg = document.createElement('img')
+        .appendChild()
+            appends nodes
+                document.body.appendChild(newImg)           // appends as last element of body
+            .append()
+                allows to append more than one thing at a time, can add text as well
+                    const p = document.querySelector('p')
+                    p.append('text added to the last', 'both are appended')
+            .prepend()
+                const newB= document.createElement('b')
+                newB.append('Hi!')
+                p.prepend(newB)
+
+        .getElementById()  
+            returns `Element` object representing element whose `id` property mathes the specified string
+                const image = document.getElementById('imageID')
+        .getElementsByTagName()
+            return `HTMLCollection` of elements with given tag name
+            collection if array-like 
+                const allImages = document.getElementsById('img')
+                for (let img of allImages) {console.log(img.src)}           // prints all src of img 
+        .getElementsByClassName()
+            returns `HTMLCollection` array-like object of all child elements which have all of the given class name(s)
+                document.getElementsByClassName("red test")     // all elements that have both red and test classes
+        .querySelector()
+            all-in-one method to select single element, the first match
+                document.querySelector('tag')
+                document.querySelector('#id')
+                document.querySelector('.class')
+                document.querySelector('img:nth-of-type(2)')
+                document.querySelector('a[title="Java"]')
+        .querySelectorAll()
+            returns all matched 
+                document.querySelectorAll('p a')
+
+
+        .getAttribute()
+            gets directly from HTML not DOM
+                let currentClasses = h2.getAttribute('class')
+            can also acces by, uses DOM 
+                const input = document.querySelector('input')
+                input.type
+        .setAttribute()
+            input.setAttribute('class', `${currentClasses} purple`)     // adding purple class 
+            input.type = 'password'
+        
+        
+
+
+        Properties
+            .innerText
+                property of HTMLElement that represents the rendered text content. sensitive to what's actually showing 
+                document.querySelector('p').innerText
+            .textContent
+                like innerText but doesn't case what's actually showing up on screen
+            .innerHTML
+                returns tags as well
+                    document.querySelector('h1').innerHTML = '<i>Italicised<i>'
+            .style
+                contains in-line style in HTML
+                    document.querySelector('h1').style.color
+
+                 window.getComputedStyle()
+                    window.getComputedStyle(document.querySelector('h1')).
+            .classList
+                DOMTokenList, control the classes on an element and retrive them
+                    h2.classList 
+                .add()
+                    h2.classList.add('purple')      // adds class of purple 
+                .remove()
+                    h2.remove('border')
+                .contains()
+                .toggle()
+                    add if not present and vice versa
+            .parentElement
+                traverses upwards, only one parent  
+            .children
+                HTMLCollection
+                .childElementCount 
+            .nextSibling, .previousSibling
+                includes text nodes that aren't HTML tags
+            .nextElementSibling, .previousElementSibling

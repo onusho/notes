@@ -66,7 +66,7 @@ selector
     
     direct child            div > li {}                         select only <li>'s that are direct children of <div> 
 
-    attribure selector      input[type="text"] {}
+    attribute selector      input[type="text"] {}
                             a[href*="google"] {}                any anchor tag with href that contains "google"
                             a[href$=".org"] {}                  any anchor tag with href what ends wit ".org"
 
@@ -331,6 +331,3 @@ BOOTSTRAP
         .nav-link, .active, .disabled
 
         .fixed-top
-
-
-
