@@ -1,0 +1,28 @@
+div {
+    /* display: flex;
+    justify-content: center;
+    align-items: center */
+    text-align: center;
+    border: 2px dotted;
+    /* margin: 10px; */
+    padding: 20px;
+}
+
+body {
+    background-color: white;
+}
+
+button {
+    border: 2px outset blue;
+    background-color: lightblue;
+    height: 60px;
+    width: 60px;
+    cursor: pointer;
+}
+/* 
+button:hover {
+    background-color: blue;
+    color: white;
+    border-radius: 50%;
+    transition: linear 1s;
+} */

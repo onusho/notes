@@ -5,7 +5,10 @@ Basics
         using browser console
         .js => .html
             include script in html files inside <head> or <body>
-            <head>... <script src="app.js"></script>
+            <script src="app.js"></script> 
+
+        Debugging Code
+            use browser 'Sources' to use breakpoints, and callstack, scope, listeners
 
     Variables
         variables can change type and references for literals, objects
@@ -385,17 +388,26 @@ Document Object Model
         
         .createElement()
             const newImg = document.createElement('img')
-        .appendChild()
-            appends nodes
-                document.body.appendChild(newImg)           // appends as last element of body
-            .append()
-                allows to append more than one thing at a time, can add text as well
-                    const p = document.querySelector('p')
-                    p.append('text added to the last', 'both are appended')
-            .prepend()
-                const newB= document.createElement('b')
-                newB.append('Hi!')
-                p.prepend(newB)
+            .appendChild()
+                appends nodes
+                    document.body.appendChild(newImg)           // appends as last element of body
+                .append()
+                    allows to append more than one thing at a time, can add text as well
+                        const p = document.querySelector('p')
+                        p.append('text added to the last', 'both are appended')
+                .prepend()
+                    const newB= document.createElement('b')
+                    newB.append('Hi!')
+                    p.prepend(newB)
+            .insertAdjacentElement()
+                targetElement.insertAdjacentElement(position, element)
+                position - 'beforebegin', 'afterbegin', 'beforeend', 'afterend'
+            .after()
+            .before()    
+            .removeChild()
+                parent.removeChild(child)
+            .remove()
+                element.remove()
 
         .getElementById()  
             returns `Element` object representing element whose `id` property mathes the specified string
@@ -466,3 +478,439 @@ Document Object Model
             .nextSibling, .previousSibling
                 includes text nodes that aren't HTML tags
             .nextElementSibling, .previousElementSibling
+
+
+
+Events   
+    event object
+        automatically passed in to our callback function, contains information about that event 
+            .addEventListener('click', function (evt) {evt.preventDefault()})
+            MouseEvent
+            KeyboardEvent
+            
+        .preventDefault()
+            prevents default behaviour, like forms won't open new page automaticall and send you to a new page
+
+        .stopPropagation()
+            events bubble up to the top when elements are nested, 
+            so when child element event happens, it triggers parent event events one by one as well but this method stops upward propagation  
+    ways
+        in-line event handlers 
+            not a good approach, because behavious is exclusive to that element
+                <button onlick="alert('you clicked me!')">Click Me!</button>
+
+        defining element properties using JS
+            give it a function, can only have one callback for same event
+                const btn = document.querySelector('button');
+                btn.onclick = () => console.log("You clicked me!");
+                btn.onmouseenter = () => console.log("AAAH!");
+
+        .addEventListener()
+            method of `EventTarget` interface, allows as many callback as we want for the same event 
+                button.addEventListener('click', () => alert('You clicked!'))
+                button.addEventListener('click', () => alert('Second Action'))
+
+            `this` keyword inside the callback function will refer to the element 
+                h1.addEventListener('click' function() {
+                    this.style.backgroundColor = randomColor();
+                })
+
+                function colorize() {                                   // random color
+                    this.style.backgroundColor = randomColor()
+                }
+                h1.addEventListener('click', colorize)
+
+                const input = document.querySelector('input')
+                input.addEventListener('keyup', callback)
+                'keyup', 'keydown'
+        
+
+                window.addEventListener('keydown', function(e) {
+                    switch (e.code) {
+                        case 'ArrowUp':
+                            console.log("Up!");
+                            break;
+                        case 'ArrowDown':
+                            console.log("Down!");
+                            break;
+                        default:
+                            console.log("Ignored!");
+                    }   
+                })
+
+            Event Types 
+                    Mouse Events
+                        'click', 'dblclick', mousedown/mouseup, mousemove, mouseenter/mouseleave, mouseover/mouseout
+                    
+                    Keyboard Events
+                        'keydown', 'keyup'
+                        .code       location of the key pressed
+                        .key        text that is entered
+                    
+                    Forms, Input Events
+                        'submit'
+                            form is submitted
+                                <form action = "/dogs" id="tweetform">          // data sent to /shelter and page changed
+                                    <input type="text" name="username" placeholder="username">
+                                    <input type="text" name="tweet" placeholder="tweet">
+                                    <button>Post Tweet</button>
+                                </form>
+                                    
+                                const tweetForm = document.querySelector("#tweetform ")
+                                tweetForm.addEventListener('submit', function (e) {
+                                    e.preventDefault();
+                                    const usernameInput = tweetForm.elements.username;              // `.elements` we can access them by their name="" attribute
+                                    usernameInput.value = "";                                       // `.value` form element value are accessed using 
+                                }); 
+                        'change'        
+                            when input loses focus after its value has been modified
+                        'input' 
+                            value of <input>, <textarea>, <contentidtable> element changes   
+                                const input = document.querySelector('input');
+                                input.addEventListener('input', (e) => {
+                                    h1.innerText = input.value;
+                            })
+                        'blur'
+                            element loses focus
+                        'focus'
+                            element gains focus
+                        'reset'
+                            form is reset
+                    
+                    Window & Document Events 
+                        load                whole page is fully loaded
+                        DOMContentLoaded    initialHTML completely loaded, without waiting for images 
+                        resize              window resized 
+                        scroll              when scrolling occurs
+                    
+                    Clipboard Events
+                                copy                fires when content is copied
+                                cut                 fires when content is cut
+                                paste               fires when content is pasted
+
+                    Touch Events (Mobile)
+                                touchstart          triggered when a finger touches the screen
+                                touchmove           fires as the finger moves across the screen
+                                touchend            fires when the finger is lifted off the screen
+                                touchcancel         fires when the touch is interrupted
+
+                    Drag & Drop Events
+                                dragstart           fires when dragging starts
+                                drag                fires continuously while dragging
+                                dragenter           triggered when dragged item enters a valid drop target
+                                dragleave           triggered when dragged item leaves a drop target
+                                dragover            fires while dragging over a target (needs preventDefault to allow dropping)
+                                drop                fires when the item is dropped
+
+                    Media Events
+                                play                triggered when media starts playing
+                                pause               triggered when media is paused
+                                ended               fires when media playback ends
+                                volumechange        fires when the volume is adjusted
+
+                    Miscellaneous Events
+                                contextmenu         fires when the right-click menu is opened
+                                error               fires when a resource fails to load
+                                animationstart      fires when a CSS animation starts
+                                animationend        fires when a CSS animation ends
+                                animationiteration  fires when a CSS animation repeats
+                                transitionend       fires when a CSS transition completes
+
+        .removeEventListener()
+                removes event listener previously registered with EventTarget.addEventListener() from target 
+    
+    Event Delegation
+            attach Event Listener to the parent element so that all old/new elements nested inside also that that event property
+
+            here we have added eventlistener to parent <ul> instead of <li> so every <li> in <ul> carries the same property 
+                    ul.addEventListener('click', function (e) {
+                        if (e.target.nodeName === 'LI'){
+                            e.target.remove();                      // remove <li> nested in <ul>
+                        }
+                    })
+
+
+
+Async JS
+    JS is single threaded but works around that using browsers
+    browsers come with Web APIs that are able to handle certain tasks in the backghround (making requests, setTimeout)
+    JS call stack recognized these Web API functions and passes them off to the browser to take care of 
+    once browser finished those tasks, they return and are pushed onto the the stack as callback
+
+        console.log('i print first')
+        setTimeout(() => console.log('print after 3 seconds'), 3000)
+        console.log('i print second')
+    
+    Callbacks Hell 
+        callbacks are used for ASYNC functions 
+        success callback and faliure callbacks per request, lost of nasty function
+            const requestCallback = (url, success, faliure) => {
+                const delay = Math.random() * 4500;
+                setTimeout(() => {
+                    if (delay > 4000) {
+                        faliure('Connection Timeout')
+                    }
+                    else {
+                        successs(`Data ${url})
+                    }
+                }, delay)
+            }
+            
+            setTimeout(() => {
+                document.body.style.backgroundColor = 'red';
+                setTimeout(() => {
+                    document.body.style.backghroundcolor = 'orange';
+                    setInterval(---)
+                }, 1000)
+            }, 1000)
+
+            const delayedColorChange = (newColor, delay, doNext) => {
+                setTimeout(() => {
+                    document.body.style.color = newColor;
+                    doNext && doNext();         // undefined if we didn't pass anything in so the second half doen't run
+                }, delay);
+            }   
+
+            delayedColorChange('red', 1000, () => {
+                delayedColorChange('orange', 100)
+            })
+
+            searchMoviesAPI('amadeus', () => {
+                // if API function works
+                saveToMyDB(movies, () => {
+                    // if it works, run this:
+                }, () => {
+                    // if it doesn't work, run this:
+                })
+            }, () => {
+                // if API function doesn't work
+            })
+    
+    Promises
+        object representing eventual completion or faliure of async operation, and its returning value
+        we can use .then(callback(responseObject)), .catch(callback(errorObject)), finally() to define flow
+            pending         initial state
+            fulfilled       succesfull
+            rejected        failed    
+            
+            const fakeRequest = (url) => {
+                return new Promise((resolve, reject) => {
+                    const rand = Math.random();
+                    setTimeout(() => {
+                        if (rand < 0.7) {
+                            resolve('Fake Data');
+                        } 
+                        reject('Request Error');
+                    }, 1000);
+                })
+            }
+
+            promiseObject.then(fullfilledCallback).catch(rejectedCallback)
+
+            requestPromise('1')
+                .then((data) => return requestPromise('2'))         // sequential requests 
+                .then((data) => return requestPromise('3))
+                .catch((err) => console.log('Request Failed'))
+
+            const delayedColorChange = (color, delay) => {
+                return new Promise((resolve, reject) => {
+                    document.body.style.backgroundColorr = color;
+                    resolve();
+                }, delay)
+            }
+
+            delayedColorChange('red', 1000)
+                .then(() => delayedColorChange('orange', 1000))
+                .then(() => delayedColorChange('blue', 1000))
+                .then(() => delayedColorChange('yellow', 1000))
+                .then(() => delayedColorChange('brown', 1000))
+                .then(() => delayedColorChange('violet', 1000))
+
+    Async Functions
+        async 
+            declare async functions, always return a promise automatically
+            if function returns a value then promise will be resolved with that value 
+            if function throws exception, promise will be rejected 
+                    async function hello () {
+                        return 'hey';               // Promise (<resolved>: 'hey')
+                    }
+                    async function uhoh () {
+                        throw new Error ('oh no!'); // Pomise (<rejected>: Error: oh no!)
+                    }
+                    
+                    const sing = async () => {return 'Lalala'}      // Promise (<resolved>: 'allala')
+                    sing().then((data) => console.log("Promise resolved with", data)).catch(err => console.log('oh no' + err))
+                    
+                    const login = async (username, password) => {
+                        if (!username || !password) throw 'Missing Credentials';
+                        if (password === 'pass') return 'Welcome!'
+                        throw 'Invalid Password'
+                    }
+                    login('anush', 'pass').then(msg => {console.log('logged' + msg)}).catch(err => {console.log('error' + err)})
+        await
+            will pause execution of fucntion, waiting for a promise to be resolved
+                    async function rainbow () {
+                        await delayedColorChange('red', 1000)
+                        await delayedColorChange('orange', 1000)
+                        await delayedColorChange('blue', 1000)
+                        await delayedColorChange('violed', 1000)
+                        await delayedColorChange('green', 1000)
+                        await delayedColorChange('indigo', 1000)
+                        return 'resolved'
+                    }
+
+                    async function makeTwoRequests() {
+                        try {
+                            let data1 = await fakeRequest('/page1')
+                            let data2 = await fakeRequest('/page2')
+                        } catch (e) {
+                            console.log('error', e)
+                        }
+                    }
+                    
+Requests    
+    AJAX    
+        asynchronous javascript and xml, more common now, async js and json
+        making requests behind the scenes, 
+
+    API 
+        application programming interface 
+        defines interactions between multiple software itermediaries, kinds of calls, requests that can be made, data formats, conventions to follow
+        Web API, for web server/browser, usually retured in JSON
+   
+            XML
+
+                extensible markup langauge
+                like HTML but the tags can be anything
+                    <root>
+                        <Products>
+                            <Product>
+                                <Code>2941</Code>
+                                <Qty>23</Qty>
+                            </Product>
+                            <Product>
+                                ---
+                            </Product>
+                            ---
+                        </Products>
+                    </root>
+
+            JSON 
+                javascript object notation, key value pairs in key has to be "dblquotedstring"
+                returned as string so must be converted to object
+                    const parsed = JSON.parse(data)
+                    parsed.key 
+                object -> json string
+                    JSON.stringify(parsed)
+            
+
+            HTTP Verbs
+                GET 
+                    fetch
+                POST/PUT
+                    transmit
+            
+            HTTP Status Codes 
+                Informational   100-199
+                Successful      200-299
+                    200 OK
+                Redirection     300-399
+                Client error    400-499
+                    404     not found
+                    405     method not allowed
+                Server error    500-599
+
+            Query String
+                end of url ?, then key vaule pairs, seperated by &
+                is ignored by server unless it's looking for it
+                    baseurl?queryString
+                    url.com/api/something?K=------D=-----------X=-------F=-------
+            
+            Headers
+                addidtional way to passing info with request/response, key value pairs
+                key:value pairs, addon details
+                devtools -> network -> headers tab
+                    Accept: application/json
+        
+    XMLHttpRequest
+        original way of sending requests, doesn't support promises, but returns XMLHttpRequest
+            const req = new XMLHttpRequest();
+            req.onload = function ()  {
+                console.log(this)                                   // response object
+                console.log(JSON.parse(this.responseText))          // JSON response
+                
+                const req2 = ---            // nesting required
+                };
+            req.onerror = function (err) {
+                console.logg('Error', err)
+            };
+            req.open('GET', 'https://swapi.dev/api/people/1')
+            req.setRequestHeader('Accept', 'application/json')
+            req.send();
+    
+    fetch()
+        returns promise
+            fetch("https://swapi.dev/api/poeple/1/")
+                .then(res => {
+                    console.log('Resolved', res)                                // res is a ReadableStream, has incomplete body and doesn't contain all the JSON data
+                    return res.json()                                                  // .json() returns Promise
+                })
+                .then(data => {
+                    console.log('JSON Done', data)             // need to just .json() for complete JSON data 
+                    return fetch("https://swapi.dev/api/poeple/2/")
+                })
+                .then(res => {
+                    console.log('Resolved 2', res)
+                    return res.json()
+                })
+                .then(data => {
+                    console.log('JSON Done 2', data)
+                })
+                .catch(e => {
+                    cosole.log('Error', e)
+                })
+
+        using async functions
+            const loadStarWarsPeople = async () => {
+                try {
+                    const res = await fetch("https://swapi.dev/api/poeple/1/")
+                    const data = await res.json();
+                    console.log(data);
+                    const res2 = await fetch("https://swapi.dev/api/poeple/2/")
+                    const data2 = await res.json();
+                    console.log(data2)
+                } catch (e) {
+                    console.log("error", e)
+                }
+            }
+    
+    Axios
+        library for making HTTP requests, not native 
+            const axios = require('axios')
+
+            axios.get('/user?ID=12345')
+                .then(function (response) {
+                    //success 
+                    console.log(response)       // json already parsed 
+                })
+                .catch(function (error) {
+                    // faliure 
+                })
+                .then(function () {
+                    // always executed
+                })
+
+            const getStarWarsPerson = async (id) => {
+                try {
+                    const res = await axios.get(`https://swapi.dev/api/poeple/${}/`)
+                    console.log(res)
+                } catch (e) {
+                    // fail
+                }
+            }
+
+            const getDadJoke = async () => {
+                const config = {headers: {Accept: 'application/json'}}              // sending headers with request 
+                const res = await axios.get('https://icanhazdadjoke.com/', config)
+                console.log(res.data.joke)                                                    // in proper parsed json format
+            }
