@@ -1,7 +1,7 @@
 Basics
-    REPL - read evaluate print loop
 
     Running Code
+        it's a specification that browsers implement
         using browser console
         .js => .html
             include script in html files inside <head> or <body>
@@ -292,7 +292,7 @@ Basics
                 
                 works differently for Arrow Functions, within them `this` refers to Window Object not the parent object
         
-        Defual Parameters
+        Defualt Parameters
             should appear after non-default params
                 function multiply(a, b = 1) {
                     return a * b;
@@ -309,8 +309,8 @@ Basics
             or an object expression to be expanded in places where zero for more key-value pairs (for object literals) are expected
                 Math.max(13, 3, 5, 6, 7, 21 ,754, 2)        // valid
                 Math.max(nums)                              // returns NaN, because we passed an array
-                Math.max(...nums)                           // spreads out array to seperate arguments, to function calls
-            each element passed as a seperate argument 
+                Math.max(...nums)                           // spreads out array to separate arguments, to function calls
+            each element passed as a separate argument 
                 console.log(...'hello') -> console.log('h', 'e', ...)
 
             can be used to hard-copy the contents of an array 
@@ -478,6 +478,9 @@ Document Object Model
             .nextSibling, .previousSibling
                 includes text nodes that aren't HTML tags
             .nextElementSibling, .previousElementSibling
+            .elements
+                when dealing with forms 
+                    form.elements.query.value
 
 
 
@@ -511,7 +514,7 @@ Events
                 button.addEventListener('click', () => alert('Second Action'))
 
             `this` keyword inside the callback function will refer to the element 
-                h1.addEventListener('click' function() {
+                h1.addEventListener('click', function() {
                     this.style.backgroundColor = randomColor();
                 })
 
@@ -524,7 +527,7 @@ Events
                 input.addEventListener('keyup', callback)
                 'keyup', 'keydown'
         
-
+            passes Event Object to it's callback function
                 window.addEventListener('keydown', function(e) {
                     switch (e.code) {
                         case 'ArrowUp':
@@ -688,43 +691,75 @@ Async JS
     
     Promises
         object representing eventual completion or faliure of async operation, and its returning value
-        we can use .then(callback(responseObject)), .catch(callback(errorObject)), finally() to define flow
-            pending         initial state
-            fulfilled       succesfull
-            rejected        failed    
-            
-            const fakeRequest = (url) => {
-                return new Promise((resolve, reject) => {
-                    const rand = Math.random();
-                    setTimeout(() => {
-                        if (rand < 0.7) {
-                            resolve('Fake Data');
-                        } 
-                        reject('Request Error');
-                    }, 1000);
-                })
-            }
+        pending         initial state
+        fulfilled       succesfull
+        rejected        failed    
 
-            promiseObject.then(fullfilledCallback).catch(rejectedCallback)
+        .resolve(value)         marks Promise fulfilled with value 
+        .reject(error)          marks Promise reject with error message 
 
-            requestPromise('1')
-                .then((data) => return requestPromise('2'))         // sequential requests 
-                .then((data) => return requestPromise('3))
-                .catch((err) => console.log('Request Failed'))
+            const myPromise  = new Promise((resolve, reject) => {
+                const success = true;
+                if (success) {
+                    resolve('successfull');
+                } else {
+                    reject ('failed');
+                }
+            })
 
-            const delayedColorChange = (color, delay) => {
-                return new Promise((resolve, reject) => {
-                    document.body.style.backgroundColorr = color;
-                    resolve();
-                }, delay)
-            }
+        .then(resultCallback)         for success,  and returns new Promise, when used after .catch(), always executed
+                .then(result => {})
+        .catch(errorCallback)     
+                .catch(error => {})     
+        .finally() to define flow
+                finally(() => {})
 
-            delayedColorChange('red', 1000)
-                .then(() => delayedColorChange('orange', 1000))
-                .then(() => delayedColorChange('blue', 1000))
-                .then(() => delayedColorChange('yellow', 1000))
-                .then(() => delayedColorChange('brown', 1000))
-                .then(() => delayedColorChange('violet', 1000))
+                const fakeRequest = (url) => {
+                    return new Promise((resolve, reject) => {
+                        const rand = Math.random();
+                        setTimeout(() => {
+                            if (rand < 0.7) {
+                                resolve('Fake Data');
+                            } 
+                            reject('Request Error');
+                        }, 1000);
+                    })
+                }
+
+                promiseObject.then(fullfilledCallback).catch(rejectedCallback)
+
+                requestPromise('1')
+                    .then((data) => return requestPromise('2'))         // sequential requests 
+                    .then((data) => return requestPromise('3))
+                    .catch((err) => console.log('Request Failed'))
+
+                const delayedColorChange = (color, delay) => {
+                    return new Promise((resolve, reject) => {
+                        document.body.style.backgroundColorr = color;
+                        resolve();
+                    }, delay)
+                }
+
+                delayedColorChange('red', 1000)
+                    .then(() => delayedColorChange('orange', 1000))
+                    .then(() => delayedColorChange('blue', 1000))
+                    .then(() => delayedColorChange('yellow', 1000))
+                    .then(() => delayedColorChange('brown', 1000))
+                    .then(() => delayedColorChange('violet', 1000))
+
+        Promise.all([])
+            waits for all Promises to fulfill, if any reject, immediately rejects 
+                Promise.all([
+                    Promise.resolve("1");
+                    ---
+                ]).then(results => console.log(results))            // ['1', '2', ]
+                .catch(err => console.error(err));
+        Promis.race([])
+            resoves, rejects as soon as any Promise settles
+        Promise.allSettled([])
+            waits for all Promises to settle
+        Promise.any([])
+            resolves with first fulfilled Promise 
 
     Async Functions
         async 
@@ -767,7 +802,9 @@ Async JS
                             console.log('error', e)
                         }
                     }
-                    
+
+
+
 Requests    
     AJAX    
         asynchronous javascript and xml, more common now, async js and json
@@ -821,7 +858,7 @@ Requests
                 Server error    500-599
 
             Query String
-                end of url ?, then key vaule pairs, seperated by &
+                end of url ?, then key vaule pairs, separated by &
                 is ignored by server unless it's looking for it
                     baseurl?queryString
                     url.com/api/something?K=------D=-----------X=-------F=-------
@@ -914,3 +951,94 @@ Requests
                 const res = await axios.get('https://icanhazdadjoke.com/', config)
                 console.log(res.data.joke)                                                    // in proper parsed json format
             }
+
+
+
+Object Oriented Programming 
+    Factory Function 
+        make objects, each object has a unique copy of the function itself
+            function makeColor(r, g, b) {
+                const color = {}
+                color.r = r;
+                color.g = g;
+                color.b = b;
+                color.rgb = function() {
+                    const {r, g, b} = this;
+                    return `rgb(${r}---)
+                }
+                color.hex = function() {
+                    ---
+                }
+                return color;
+            }
+            const myColor = makeColor(0, 0, 0)          // returns color object
+            const secondColor = makeColor(---)
+            myColor.hex === secondColor                 // unique  
+    
+    Prototype
+        mechanism by which js objects inhert features from one another 
+        objects can have prototype object that can act as a template object and is shared between objects of the same Constructor
+
+        __proto__
+            referce to the prototypes
+
+        Constructor Function
+            properties defined as below and should be created using `new` otherwise `this` refers to Window object
+            methods are defined separately otherwise like Constructor.prototype.function = function() {} otherwise they'll be unique to objects
+                function Color(r, g, b) {
+                    this.r = r;
+                    this.g = g;
+                    this.b = b;
+                }
+            new    
+                creates blank plain JS object, 
+                links (sets the constructor of) this object to another object. so we can add methods to prototype not individual objects 
+                passes the newly created object at start as the `this` context, returns `this` if the function doesn't return it's own object
+                    
+                    // arrow functions behave differently with `this` 
+                    Color.prototype.rgb = function () {
+                        const {r, g, b} = this;
+                        return `rgb(${}---)
+                    }
+                    Color.prototype.hex = function () {
+                        ---
+                    }
+                    const thisRefersWindow = Color(r, g, b)
+                    const thisRefersColor = new Color(r, g, b)
+        
+    Classes 
+            class Color {
+                constructor (r, g, b, name) {
+                    this.r = r
+                    this.b = b
+                    this.g = g
+                    this.name = name;
+                }
+                rgb () {
+                    return 'this is a method'
+                }
+            }
+        Interitence 
+            extends 
+                uses parent constructor if base class doesn't have one 
+                    class Pet {}
+                    class Cat extends Pet {}                
+                    class Dog extends Pet {}
+            super
+                reference to the super class 
+                    class Cat extends Pet {
+                        constructor (name, age, livesLeft = 9) {
+                            super(name, age)
+                            this.livesLetft = livesLeft;
+                        }
+                    }
+
+
+Terminal
+    ls 
+    pwd
+    cd
+    touch 
+        create (multiple files)
+    mkdir
+    rm -rf

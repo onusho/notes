@@ -1,0 +1,57 @@
+Basics
+    javascript runtime, running JS outside browser
+    using JS for web server side programming, command line tools, native apps (vsc), video games, dronse software 
+    browser specific things like DOM aren't available 
+
+    Node REPL
+        read evaluate print loop
+        commands
+            .exit 
+            .help
+            .break, .clear 
+            .editor
+            .load 
+            .save
+
+    Common Things   
+        node                    // starting node REPL
+        node -v                 // version
+        node filename.js        // running files
+
+    global 
+        global object like `window` in browser
+
+        process 
+            provides information about, control over, current Node.js process
+
+                process.version 
+                process.cwd()           current working directory 
+                process.argv            
+                    returns array OF cli args passed when Node.js was launched
+                    can pass in arguments to a script 
+                        const args = process.argv.slice(2)
+        fs
+            file system
+                const fs = require('fs')
+            .mkdir(), .mkdirsync()
+                const folderNmae = process.argv[2] || 'Project'
+                fs.mkdir('/path/', {recursive: true}, (err) => {
+                    console.log('in the callback')
+                    if (err) throw err;
+                })
+            .writeFile()
+    
+    modules
+        import
+            const fs = require('fs')            // native library
+            const math = require('./math')      // file 
+        export
+            module.exports = 'hello'            // becomes math = 'hello'
+            module.exports.add = add            // add = () => {}
+            const math = {
+                add: add,
+                ---
+            }
+            module.exports = math
+
+            exports = math                      // shorthand, `exports`  variable available within module's file-level scope, exports = module.exports
