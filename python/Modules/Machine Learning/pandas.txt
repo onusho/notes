@@ -5,7 +5,7 @@ import pandas as pd
 
 data frame:
     columns: sequence of arrays of identical length
-    rows:   entries in differenct arrays can be combined to form a row
+    rows:   entries in different arrays can be combined to form a row
 
 
 
@@ -15,24 +15,45 @@ pd
             2D, size-mutable, potentially hetrogeneous tabular datastructre also containes labeled axes and can be thought of as dict-like container for Series objects    
         
         df = pd.DataFrame(data = dict_like)
+            dict_like = {'col' : [values], ...}
         df = pd.DataFrame(data = array_like_object, columns = list_of_col_names)                            # arrays can be multidientional
-        
+
+        df.index = ['BR', ...]      # set index for dataframe
+
         Indexing:
-                df.column_name              access columns -> 
-                df.comlumn_name.values      returns array of values
-                df["col_name"]              returns pd.core.series.Series
-                df[["mpg", "horsepower"]]   DataFrame with corresponding set of columns
-                df[:3]              [0,3) subset of rows 
+            []       
+                df.column_name                  access columns -> 
+                df.comlumn_name.values          returns array of values
+                df["column_name"]               returns pd.core.series.Series
+                df[['column_name]]              returns data as DataFrame
+                df[["mpg", "horsepower"]]       (sub) DataFrame with corresponding set of columns
                 
-                Boolean Index:
-                    idx_80 = df['year'] > 80    -> .Series of index True/Flase   
-                    df[idx_80]                  subset of rows with year greater 80
-                Methods:
-                    .loc    boolean and name based  [row, col]          df.loc[lambda data: data['year'] > 80, ['weight', 'origin']] OR df.loc[df['year'] > 80, ['weight', 'origin']]
-                            can mix it with lamda functions             Auto.loc[lambda df: (df['year']) > 80 & (df['mpg'] > 30), ['weight', 'origin']]
-                                                                        Auto_re.loc[lambda df: (df['displacement'] < 300) & (df.index.str.contains('ford') | df.index.str.contains('datsun')), ['weight', 'origin']]
-                    .iloc   integer based   [row, col]
-        Attributes:
+                df[:3]                          [0,3) subset of rows 
+            
+            Boolean Index:
+                idx_80 = df['year'] > 80    -> .Series of index True/Flase   
+                df[idx_80]                  subset of rows with year greater 80
+                
+                brics[np.logical_and(brics['area'] > 8, brics['area'] < 10)]
+                brics[(brics['area'] > 8) & (brics['area'] < 10)]
+                brics.query('8 < area < 10')
+                brics[brics['area'].between(8, 10, exclusive=True)]
+            Methods:
+                .loc 
+                    boolean and label based  [row, col]          
+                        df.loc[['RU', 'IN', 'CH], ['country', 'capital']]
+                        df.loc[:, ['country', 'capital']]
+                        df.loc[df['year'] > 80, ['weight', 'origin']]
+                    can mix it with lamda functions             
+                        df.loc[lambda data: data['year'] > 80, ['weight', 'origin']] 
+                        df.loc[lambda df: (df['year']) > 80 & (df['mpg'] > 30), ['weight', 'origin']]
+                        df.loc[lambda df: (df['displacement'] < 300) & (df.index.str.contains('ford') | df.index.str.contains('datsun')), ['weight', 'origin']]
+                .iloc   
+                    integer position based   [row, col]
+                        df.iloc[[1, 2, 3], [0, 1]]
+                        df.iloc[:, [0, 1]]
+                        
+        Attributes: 
 
                 .shape            (row, col)
                 .size
@@ -50,7 +71,7 @@ pd
                 
                 .describe()               numberical summary of each column     df[['mpg', 'weight']].describe() or df['mpg'].describe()
     .Series(data, index, dtype, name)
-            1D ndarray with axis labels
+            1D ndarray with axis labels, bunch of Series -> dataframe
             df.cylinders = pd.Series(Auto.cyclinder, dtype = 'category')
 
         Attribute
@@ -65,7 +86,9 @@ pd
     
     .read_csv(file_path, sep, delimiter, na_values)
         if seperator, delimiter, null values encoded differently then put in keyword arguments. returns DataFrame or TextParser
-    
+            df = pd.read_csv('path/to/df.csv', index_col=0)         # sets first col in csv as index
+
+
     .concat([dataframes], axis=)
 
     .plotting

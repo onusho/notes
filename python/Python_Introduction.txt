@@ -29,10 +29,10 @@ Basics:
 			a if [condition] else b 	# this can be nested as well
 
 	for:		
-			for -> else : if loop executed fully then else; if terminated in between then else not executed
-			zip():  returns zip object iterator of tuples
-			enumerate(): returns enumerate object iterator adds a counter to the collection passed	
-			in, range(); for item in collection; collection can't be changed when traversing through for loop
+			for -> else : 				if loop executed fully then else; if terminated in between then else not executed
+			zip():  					returns zip object iterator of tuples
+			enumerate(): 				returns enumerate object iterator adds a counter to the collection passed	
+			in, range();		 		for item in collection; collection can't be changed when traversing through for loop
 			att for att in 
 			# for l in reversed(range(L - 1))
 	
@@ -53,6 +53,9 @@ Basics:
 				greet(*args, **kwargs) -> args = ['Hello'], kwargs = {'name': 'Alice'}
 
 Data Structures:
+
+	type()
+		returns Type object, represents type of object passed
 
 	sorted/.sort(key, reverse); 
 	min/max(key) -> key: 

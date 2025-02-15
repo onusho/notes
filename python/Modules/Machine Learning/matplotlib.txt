@@ -13,68 +13,84 @@ plot:   figure and one (or more) axes
 import matplotlib.pyplot as plt
 
     plt
-        .figure
+        .figure()
             # Creates a new figure.
             fig = plt.figure()
             # Example:
             # fig = plt.figure(figsize=(8, 6))
-        .axes
+        .axes()
             # Returns the current axes (if none exist, it will create one).
             axes = plt.gca()
             # Example:
             # ax = plt.axes()
         
-        .subplot
-            # Adds a subplot to the current figure.
-            ax = plt.subplot(111)
-            # Example:
-            # ax1 = plt.subplot(221)  # upper left
-            # ax2 = plt.subplot(222)  # upper right
-        .subplot_mosaic()
-            # Creates a mosaic layout of subplots.
-            fig, axd = plt.subplot_mosaic([["left", "right"]])
-            fig, axd = plt.subplot_mosaic([['top', 'top'], ['bottom_left', 'bottom_right']])
-        .subplots(nrows, ncols, figsize=(size_tuple), sharex=False, sharey=False)
-            # A utility wrapper. Returns tuple of figure, (array of) axes objects.
-            fig, axs = plt.subplots(2, 2, figsize=(10, 8), sharex=True, sharey=True)
-            axs[0, 0] = 
+        Basic Plot
+        .plot() 
+            plt.plot(year, pop)         # what to plot, how to plot, line plot
+            plt.show()                  # display plot
+        .scatter()
+            dict = {'Asia':'red', ...}
+            plt.scatter(x=year, y=pop, s=size, c=col, alpha=0.8)          # s=size of bubbles, c=colour of bubbles, alpha=opacity[0,1]
+        .hist()
+            plt.hist(values, bins=3)
+
+        Customization
+            .xlabel(s, fontdict=None, labelpad=None, **kwargs), .ylabel(s, fontdict=None, labelpad=None, **kwargs)
+                # Sets the label for the x-axis.
+                plt.xlabel("X-axis Label")          
+            .xticks(), yticks()
+                plt.yticks([0, 2, 4, 6, 8, 10], ['0', '2B', ...])       # tick_value, tick_labels
+            .title(s, fontdict=None, loc=None, pad=None, **kwargs)
+                # Sets a title for the axes.
+                plt.title("Title")
+            .legend(*args, **kwargs)
+                # Places a legend on the axes.
+                plt.legend(["Label 1", "Label 2"])
+            .text(x, y, s, fontdict=None, **kwargs)
+                # Adds text at an arbitrary location on the axes.
+                plt.text(1, 1, "Text")
+            .annotate(s, xy, *args, **kwargs)
+                # Adds an annotation, with an optional arrow.
+                plt.annotate("Annotation", xy=(1, 1), xytext=(2, 2),
+                arrowprops=dict(facecolor='black', shrink=0.05))
+            
+            .grid(b=None, which='major', axis='both', **kwargs)
+                # Configure the grid lines.
+                plt.grid(True)
+            
+            .xlim(left=None, right=None), .ylim(bottom=None, top=None)
+                # Sets or returns the current x-axis limits.
+                plt.xlim(0, 10)
+         
+            
+            .xscale(), .yscale()
+                plt.xscale('log')
+        
+        Grid
+            .subplot()
+                # Adds a subplot to the current figure.
+                ax = plt.subplot(111)
+                # Example:
+                # ax1 = plt.subplot(221)  # upper left
+                # ax2 = plt.subplot(222)  # upper right
+            .subplot_mosaic()
+                # Creates a mosaic layout of subplots.
+                fig, axd = plt.subplot_mosaic([["left", "right"]])
+                fig, axd = plt.subplot_mosaic([['top', 'top'], ['bottom_left', 'bottom_right']])
+            .subplots(nrows, ncols, figsize=(size_tuple), sharex=False, sharey=False)
+                # A utility wrapper. Returns tuple of figure, (array of) axes objects.
+                fig, axs = plt.subplots(2, 2, figsize=(10, 8), sharex=True, sharey=True)
+                axs[0, 0] = 
+            .tight_layout()
+
+
+
         .show()
             # Displays the current figure.
             plt.show()
-        .tight_layout()
+        .clf()
+            clear current figure
 
-        .xlim(left=None, right=None)
-            # Sets or returns the current x-axis limits.
-            plt.xlim(0, 10)
-            # Example:
-            # plt.xlim(0, 5)
-        .ylim(bottom=None, top=None)
-            # Sets or returns the current y-axis limits.
-            plt.ylim(0, 10)
-            # Example:
-            # plt.ylim(0, 20)
-        .xlabel(s, fontdict=None, labelpad=None, **kwargs)
-            # Sets the label for the x-axis.
-            plt.xlabel("X-axis Label")
-        .ylabel(s, fontdict=None, labelpad=None, **kwargs)
-            # Sets the label for the y-axis.
-            plt.ylabel("Y-axis Label")
-        .title(s, fontdict=None, loc=None, pad=None, **kwargs)
-            # Sets a title for the axes.
-            plt.title("Title")
-        .grid(b=None, which='major', axis='both', **kwargs)
-            # Configure the grid lines.
-            plt.grid(True)
-        .legend(*args, **kwargs)
-            # Places a legend on the axes.
-            plt.legend(["Label 1", "Label 2"])
-        .text(x, y, s, fontdict=None, **kwargs)
-            # Adds text at an arbitrary location on the axes.
-            plt.text(1, 1, "Text")
-        .annotate(s, xy, *args, **kwargs)
-            # Adds an annotation, with an optional arrow.
-            plt.annotate("Annotation", xy=(1, 1), xytext=(2, 2),
-                         arrowprops=dict(facecolor='black', shrink=0.05))
 
 import matplotlib.figure 
     # Top level container for all the plot elements.
