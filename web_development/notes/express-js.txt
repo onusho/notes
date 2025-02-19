@@ -1,0 +1,14 @@
+Basics 
+    framework (tells where to plug the code) zfor Node.js, create servers
+    start server to listen for requests, parse requests, match to routes, response with content
+        const express = require('express');
+        const app = express()
+        app.use(() => console.log("We got a new REQUEST!"))                 // runs all callback everytime request hit the sever
+        const port = 3000
+        app.listen(port, () => console.log('listening on port 3000'))       // http://localhost:3000
+
+    express
+
+        .use((req, res) => {})
+            runs all callback everytime request hit the sever
+        .listen(port, callback)

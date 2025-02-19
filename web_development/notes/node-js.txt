@@ -34,7 +34,7 @@ Basics
             file system
                 const fs = require('fs')
             .mkdir(), .mkdirsync()
-                const folderNmae = process.argv[2] || 'Project'
+                const folderName = process.argv[2] || 'Project'
                 fs.mkdir('/path/', {recursive: true}, (err) => {
                     console.log('in the callback')
                     if (err) throw err;
@@ -44,14 +44,34 @@ Basics
     modules
         import
             const fs = require('fs')            // native library
+            const jokes = require('give-me-a-joke')
             const math = require('./math')      // file 
-        export
-            module.exports = 'hello'            // becomes math = 'hello'
-            module.exports.add = add            // add = () => {}
-            const math = {
-                add: add,
-                ---
-            }
-            module.exports = math
+            console.dir(jokes)
 
-            exports = math                      // shorthand, `exports`  variable available within module's file-level scope, exports = module.exports
+            import franc from 'franc'                         // ES6 modules
+        
+        export
+            must export stuff out of the file
+                module.exports = 'hello'            // becomes math = 'hello'
+                module.exports.add = add            // add = () => {}
+                const math = {
+                    add: add,
+                    ---
+                }
+                module.exports = math
+
+                exports = math                      // shorthand, `exports`  variable available within module's file-level scope, exports = module.exports
+            require all files in directory, use index.js
+                allcats = [blue, sadie, janet]      // const blue = require('./blue')
+                module.exports = allcats            // in index.js in ./shelter
+                const cats = require('./shelter')
+
+    Node Package Manager (NPM)
+        library of packages published, command line tool for installing
+            npm install --save give-me-a-joke           // installed in node_modules, local
+                -g                                      // install globally
+            npm install                                 // installs all dependencies in package.json
+
+            package.json                                // metadata
+                npm init                                // create package.json
+            
