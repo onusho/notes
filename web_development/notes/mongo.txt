@@ -1,0 +1,47 @@
+mongosh
+    db                  current databse
+    show dbs/databases  list databases 
+    show collections
+    use db_name         switch to/create database 
+
+
+
+BSON 
+    json text based, makes text parsing slow. json readable format, not space-efficient. json supports limited basic data types 
+    binary json used by mongo is better 
+
+    CRUD
+        db
+            .collection 
+                .insert()
+                .inserMany()
+                .insertOne()    
+
+                .find() 
+                .findOne()
+                    $eq, $ne
+                    $gt, $gte, $lt, $lte  
+                    $in, $nin
+                    $and, $not, $nor, $or
+                        db.dogs.find({'personality.childFriendly' : true})          // nested dictionary
+                        db.inventory.find({qty: {$gt: 20}})
+                        db.dogs.find({breed: {$in: ['Mutt', 'Corgi']}, age: {$lt: 10}})
+
+                .updateOne()
+                .updateMany()
+                    $set: {}
+                    $currentDate: {}
+                        db.dogs.updateOne({name: 'Charlie'}, {$set: {age: 4}} )
+                        db.dogs.updateMany({catFriendly: true}, {$set : {"isAvailable": true}})
+                .replaceOne()
+
+                .deleteOne()
+                .deleteMany()
+collection
+    grouping of data in a database
+
+
+
+mongoose
+    ODM/ORM object document mapper, map documents coming from databse to usable JS objects
+    way to model out application data and define schema, easy ways to validate data and build complex queires

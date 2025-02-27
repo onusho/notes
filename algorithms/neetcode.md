@@ -126,13 +126,13 @@ Then link it in Markdown:
 ---
 
 
+<!-- ```markdown -->
 ## 🎯 **Sample DSA Note Template**
 
-<!-- ```markdown -->
 # 🗂️ Binary Search
 
 ## 🚀 Algorithm Overview
-Binary Search is an efficient algorithm for finding an element in a sorted array.
+Binary Search is an efficient algorithm for finding an element in a sorted array.****
 
 - **Best Case:** O(1)
 - **Average & Worst Case:** O(log n)

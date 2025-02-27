@@ -1,0 +1,100 @@
+Basics 
+    framework (tells where to plug the code) zfor Node.js, create servers
+    start server to listen for requests, parse requests, match to routes, response with content
+        const express = require('express');
+        const app = express()
+        app.use(() => console.log("We got a new REQUEST!"))                 // runs all callback everytime request hit the sever
+        const port = 3000
+        app.listen(port, () => console.log('listening on port 3000'))       // http://localhost:3000
+    nodemon
+        restarts server everytime some changes to the server code
+    const app = express()
+        .listen(port, callback)
+            listens to requests on port and calls callback at first
+        .use((req, res) => {})
+            runs callback everytime ANY request hit the sever
+                app.use(express.json())
+                app.use()
+            req         Request object
+                .params     /../..
+                .query      ?.=...
+            res         Response object
+                .send()         sends HTTP response string, only one
+                .render()       renders (ejs) view template
+                                res.render('random', {rand: num})
+        HTTP VERBS
+            .get('urlPath', (req, res) => {})
+                for get requests for specific paths (localhost:3000/path)
+                browsers send get request to load website
+                used to retrieve information, data is sent query string, information plainly visible in URL, limited amount of data can be sent
+                    app.get(/(.*)/, (req, res) => {})                       matches everything 
+                    app.get('/r/:subreddit/:postId', (req, res) => {        matches pattern /r/.../... and subreddit stored in req.params
+                        cosnt {subreddit, postId} = req.params
+                        const {q} = req.query                               matches ?q=...
+                        res.send(`<h1>Browsing the ${subreddit} subreddit and ${postId} post ID!</h1>
+                                <p>Results for ${q} query<p>`)
+                    })
+
+            .post('urlPath', (req, res) => {})
+                for post requests, post data to server, write/create/update, data sent via request body, not a query string. can send any sort of data (JSON)
+                    res.body            key value pairs of data submitted in the request body, 
+                                        by default undefined, populated when parsed using middleware like express.json()
+                                            app.use(express.json())     // paring application/json
+                                            app.use(expres.urlencoded({extended: true}))
+                    res.redirect([status,] path)
+            .put()
+            .delete()
+            .path()
+        .enable(), .disable() 
+        .set(name, value)
+            assigns setting value to name property
+                app.set('view engine', 'ejs') 
+        .static(root, [options])
+            root directory from which to serve static assests, middleware
+                app.use(express.static('static'))
+
+
+    Method Override
+        use HTTP verbs like PUT, DELETE in places where client doesn't support it
+            const methodOverride = require('method-override')
+            app.use(methodOverride('_method'))                  override with POST hvaing ?_method=DELETE 
+
+            <form action="/resource?_method=DELETE" method="POST">
+                <button type="submit">Delete Resource</button>
+            </form>
+
+
+Templating
+    define preset pattern 'views' for webpage, can dynamically modify
+    some examples EJS (embeded javascript), Jade, pug, Nunjucks, Handlebars, Jinja
+    EJS        
+            app.set('view engine', 'ejs') 
+        express assumes templates exist in directory ./views (relative to where the server is run from, node process.cwd()) but can be set to somewhere else 
+            const path = require('path')                            node built-in module
+            app.set('view', path.join(__dirname, '/views'))         setting view path
+        Tags
+            <%= %>      javascript inside then embeds value into template (HTML)
+                        <%='hello world'.toUpperCase()%>
+                        <%= num%2===0 ? 'EVEN' : 'ODD'
+            <%  %>      js code but doesn't embed to html, add logic
+                        <% if (rand % 2 === 0) { %>
+                            <h2>Even Number</h2>
+                        <% } %> 
+        Partials
+            resuse same HTML across multiple views, reusable bundle of code in a file and include it where we need it
+            store it in views/partials
+                <% users.forEach(function(user) {) %>
+                    <%- include('partials/head', {user: user}); %>
+                <% }); %>
+
+
+REST 
+    representational state transfer, architectural style for distributed hypermedia systems
+    set of guidlines for how client + server shoudl commmunicate and perform CRUD operations on given resource
+
+        HEAD            like GET but without response body 
+        GET 
+        POST            submit enitiy to resource 
+        PUT             replaces
+        PATCH           partially modifies
+        DELETE          

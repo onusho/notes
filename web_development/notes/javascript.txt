@@ -1,0 +1,1036 @@
+Basics
+
+    Running Code
+        it's a specification that browsers implement
+        using browser console
+        .js => .html
+            include script in html files inside <head> or <body>
+            <script src="app.js"></script> 
+
+        Debugging Code
+            use browser 'Sources' to use breakpoints, and callstack, scope, listeners
+
+    Variables
+        variables can change type and references for literals, objects
+            let name = 23; name = false; //is valid
+
+        var 
+            older way before 'let' and 'const'
+                var someName = value; 
+        let
+            let someName = value;
+        const
+            const pi = 3.141;
+            const arr = []      always points to the same reference, so shell may remain the same but contents can change
+        
+        Scope
+            function and block scope
+                let     follows scoping rules
+                var     globally scoped
+    Data Structures
+        Primitive Types
+            Number
+                NaN     not a number    0/0, 
+            String
+                "", ''
+                zero-indexed
+                immutable
+                    str[index]
+                    str.length                      accessing property
+                    str1 + str2                     concatanation
+                    21 + "string" => "21string"     auto typecasting
+                    Methods    
+                        str.toUpperCase()               returns String, doen't modify original
+                        str.trim()                      remove white space
+                        str.indexOf('cat')              -1 if not found
+                        str.slice(star, end)            retuns new string
+                        str.replace('teehee', 'haha')   only replaces first instance
+                        str.repeat()
+                    Template literals
+                        use backticks `${evaluate expression}`
+                            `some string ${3 + 4} thing`         templace literals                   
+            Boolean 
+                false, 0, "", null, undefined, NaN
+                true, everything else is truthy  
+            null  
+                intentional absence  
+            Undefined
+                variables that do not assigned value
+            Symbol
+            BigInt
+
+        Array
+            resizable, can contain mix of data Types
+            copy ops create shallow copies
+                let name = [];
+            nested array
+                const arr = [[,], [,]]
+            properties
+                arr.length
+            methods
+                .push()         add to end
+                .pop()          remove from end
+                .shift()        remove from start
+                .upshift()      add to start
+                .contact()      merge arrays
+                .includes()     look for value
+                .indexOf()      
+                .join()         create string from arrays
+                .reverse()      
+                .slice(start, end)                      copies a portion on an array, returns shallow copy
+                .splice(start, [,deleteCount])          in-place, changes contents of array by removes/replaces elements
+                .sort()                                 in-place, converts elements into strings then compares their UTF-16 code unit values 
+                    .sort(function(a, b) {return a - b})    ascending
+                    .sort(function(a, b) {return b - a})    descending 
+                .toStored()                             not in-place 
+                .find()
+            Array Callback Methods
+                .foreach()
+                    accepts a callback function. calls the function once per element in the array
+                        nums.forEach(function (n) {
+                            console.log(n * n)
+                        })
+                        movies = [{...}, {...}, {...}]          // array of dictionaries
+                        movies.forEach(function(movie) {
+                            console.log(`${movie.title} - ${movie/score}/100`)
+                        })
+                .map()
+                    returns new array with results of calling a callback on every element in the array
+                        const titles = movies.map(function(movie) {
+                            return movie.title.toUpperCase();
+                        }) 
+                        const newMovies = movies.map(movie => (`${movie.title} - ${movie.score / 10}`))
+                .filter()
+                    creates new array with all elements that pass the test impplemented by the provided function 
+                        const odds = nums.filter(n => (n % 2 === 1))
+                        const titles = movies.filter(m => m.score > 80).map(m => m.title)
+                .some()
+                    returns true if any of the array elements pass the text function
+                        words.some(word => (word.length > 4))
+                        words.some(w => w.includes('cake'))
+                .every()
+                    return true if all elements pass test function
+                        exams.every(score => score >= 75)
+                .reduce()
+                    executes a reducer functin on each element of the array resulting in a single value
+                    in order, passing in the return value from the calculation on the preceding element
+                    first time callback is run there is no return value of the previous calculation, but initial value may be supplied
+                    otherwise index 0 is used as initial value and iteration strats from index 1
+                        reduce(callbackFn, [initialValue])
+                    callbackFn
+                        its return value becomes value of accumulator parameter in next invocation
+                            const initialValue = 0;
+                            const sumWithInitialValue = nums.reduce(
+                                (accumulator, currentValue) => accumulator + currentValue, 
+                                initialValue
+                            );
+                            const minPrice = prices.reduce((min, price) => {
+                                if (price < min) {
+                                    return price;
+                                }
+                                return min;
+                            })
+
+        Objects Literal
+            collections of properties (key-value pair). to access data we use custom keys
+            all keys are converted to strings (except Symbols)
+            declaring
+                const objectLiteral = {
+                    key : value,        // property
+                }
+            accessing data
+                objectLiteral[key], objectLiteral["key"]  
+                objectLiteral.key
+            Object.keys(objectLiteral)      retuns array of key strings
+            Object.values(...)
+            Object.entries(...)             properties
+
+    Operators
+        comparisions
+            ==      checks value not type, coerces both values to the same type
+                    7=='7'; 0 == ''; null==Undefined
+            ===     check value and type
+
+            compares references in memory
+        logical 
+            &&, ||, !
+        typeof
+            operator retuns string indicating type of operands value    
+
+    Some Objects and Methods
+        window 
+            top level object
+        Math
+            object contains static properties and methods for mathematics
+            Math.random()       [0, 1)
+        
+        console.log()
+            prints arguments to console, useful when working with files
+
+        alert()
+            pops up alert in browser
+        
+        prompt()
+            pops up alert and asks for input
+
+        parseInt(string)
+            converts numberr in String to Number
+
+    Conditional
+        if (condition) {expressions} else if () {} else {}
+        switch (variable) { case 1: expression; break; .... default: expression}}
+
+    Loops
+        for ([initialExpression]; [condition]; [incrementExpression])
+        while (condition) {}
+        for (... of ...) {}
+            for (let element of array) {...}
+        for (... in ...) {}
+            for (let key in objectLiteral) {objectLiteral[key]}
+        break
+
+    Functions
+        functions are objects behind the scenes we can store them and pass them around (argmuments, return them)
+            function funcName(arguments) {
+                reuturn something;
+            } 
+
+        function expressions
+            storing function inside a variable
+                const square = function (num) {
+                    return num * num;
+                }
+                square(7);
+
+        Arrow Functions
+            syntactically compact alternative to regular function expression
+                const add = (x, y) => {
+                    return x + y;
+                }
+                const rollDie = () => {             // empty () for no args
+                    return Math.floor....
+                }
+                const square = num => {             // if only one arg then () optional
+                    return num * num 
+                }
+            Implicit Return 
+                const isEven = num => (                     // instead of {} use () for implicit return
+                    num % 2 === 0                           // implicit return when only one line 
+                )
+                const isEven = num => num % 2 === 0;        // one-liner implicit return
+
+        Higher Order Functions
+            accept other functions as arguments and/or return a function (factory functions)
+                function callTwice(func) {
+                    func();
+                    func();
+                }
+                const rollDie = function() {Math.floor(Math.random * 6); console.log(roll)}
+                callTwice(rollDie)
+                
+                function makeMysteryFunc() {
+                    return function () {
+                        ...
+                    }
+                }
+
+            Callbacks
+                is the function passed into another function (higher order functions) as argument, which is then invoked inside the outer function to complete some kind to routine or action
+
+                    setTimeout()
+                        sets timer which executes a function/code once timer expires
+                            setTimeout(code/fucntionRef, [delay])
+                            setTimeout(() => {console.log("Hello")}, 3000) 
+                    setInterval()
+                        repeatedly calls function/code with fixed time delay between each call, returns interavl ID   
+                            const intervalID = setInterval(myCallback, 500, "Parameter 1", "Parameter 2");
+                            function myCallback(a, b) {
+                                // Your code here
+                                // Parameters are purely optional.
+                                console.log(a);
+                                console.log(b);
+                            }
+                        clearInterval()
+
+        Methods            
+            function that is a property to an object
+                const math = {
+                    multiply : function(x, y) {
+                        return x * y;
+                    },
+                    add : function(x, y) { 
+                        return x / y;
+                    },
+                    PI : 3.14159
+                }
+
+            shorthand
+                const math = {
+                    blah : 'Hi!',
+                    add(x, y) {
+                        return x + y;
+                    },
+                    multiply(x, y) {
+                        return x * y;
+                    }
+                }
+
+            this 
+                access other properties on the same object
+                    const person = {
+                        first : 'Anush',
+                        last : 'Verma',
+                        fullName() {
+                            return `${this.first} ${this.last}`
+                        }
+                    }
+                depends on the invocation context of the function it is used in
+                not the same because this doen't have parent object but refers to Window Object (parent object)
+                    const namePrinter = person.fullName 
+                    person.fullName()
+                    namePrinter()               // 
+                
+                works differently for Arrow Functions, within them `this` refers to Window Object not the parent object
+        
+        Defualt Parameters
+            should appear after non-default params
+                function multiply(a, b = 1) {
+                    return a * b;
+                }
+            older way
+                function multiply(a, b) {
+                    b = typeof b !=== undefined ? b : 1;
+                    return a * b;
+                }
+
+
+        Spread (...name)
+            allows iterable (array) to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected,
+            or an object expression to be expanded in places where zero for more key-value pairs (for object literals) are expected
+                Math.max(13, 3, 5, 6, 7, 21 ,754, 2)        // valid
+                Math.max(nums)                              // returns NaN, because we passed an array
+                Math.max(...nums)                           // spreads out array to separate arguments, to function calls
+            each element passed as a separate argument 
+                console.log(...'hello') -> console.log('h', 'e', ...)
+
+            can be used to hard-copy the contents of an array 
+                const nums = [...nums1, ...nums2]
+                [..."hello"] -> ['h', 'e', ...]
+            
+            used for object literals, when some keys overlap then whichever comes first takes precedence
+                const catDog = {...feline, ...canine}
+                {...feline, height: 54}                 // when copying, can add new properties
+                {...[2, 4, 6, 8]}                       // from arrays
+                {..."HIII"}                             // keys are numbered starting from zero
+
+        arguments Object 
+                contains all arguments passed to the function
+                array-like object (but not array), with length property but does not have array methods  
+                available inside every fucntion except arrow functions 
+                    function sumAll() {
+                        let total = 0;
+                        for (let i = 0; i < arguments.length; i++) {
+                            total += arguemnts[i];
+                        }
+                        return total;
+                    }
+                    sumAll(8, 4, 3, 2);
+
+        Rest 
+            collects all remaining arguments into an actual array 
+                fumnction sumAll(previous, ...rest_nums) {
+                    for (let n of rest_nums) {
+                        ---
+                    }
+                }
+
+        Destructuring
+            unpack values from arrays, properties from objects into distinct variables
+                const socres = [---];                               // many elements
+                const [gold, silver] = scores;                      // gold will take first value, silver will take second
+                const [gold, silver, ...everythingElse] = scores    // everythingElse will take the remaining values
+            
+            when destructuring objects variable names should overlap original key names unless we want to rename them as shown below
+                const user = {---}
+                const {email} = user                                // = user.email
+                const {original_key_name: renamed_key_name} = user  // const renamed_key_name = user.born
+            
+            fallback/default value. died is not a key in user but we can define it, otherwise it would be 'undefined'
+                const {city, state, died = 'N/A'} = user            
+
+            parameter destructuring during function definition
+                const fullName = ({first, last}) => {return `${first} ${last}}
+                const runner = {first: -, last: -, country: -}
+                fullName(runner)
+
+
+
+
+
+    Try/Catch Exception Handling
+        try {
+            hello.toUpperCase();
+        } catch (e) {
+            console.log(e);
+        }
+
+
+
+Document Object Model 
+    JS representation of a webpage, JS "window" into the contents of a webpage
+    bunch of objects that you can interact with via JS
+    html+css go in JS objects come out as a Tree Structure
+
+    document object
+        contains representations of all the content on a page, plus tons of useful methods and properties 
+            cosole.dir(document)
+        we first select elements and then manipulate them
+        
+        .createElement()
+            const newImg = document.createElement('img')
+            .appendChild()
+                appends nodes
+                    document.body.appendChild(newImg)           // appends as last element of body
+                .append()
+                    allows to append more than one thing at a time, can add text as well
+                        const p = document.querySelector('p')
+                        p.append('text added to the last', 'both are appended')
+                .prepend()
+                    const newB= document.createElement('b')
+                    newB.append('Hi!')
+                    p.prepend(newB)
+            .insertAdjacentElement()
+                targetElement.insertAdjacentElement(position, element)
+                position - 'beforebegin', 'afterbegin', 'beforeend', 'afterend'
+            .after()
+            .before()    
+            .removeChild()
+                parent.removeChild(child)
+            .remove()
+                element.remove()
+
+        .getElementById()  
+            returns `Element` object representing element whose `id` property mathes the specified string
+                const image = document.getElementById('imageID')
+        .getElementsByTagName()
+            return `HTMLCollection` of elements with given tag name
+            collection if array-like 
+                const allImages = document.getElementsById('img')
+                for (let img of allImages) {console.log(img.src)}           // prints all src of img 
+        .getElementsByClassName()
+            returns `HTMLCollection` array-like object of all child elements which have all of the given class name(s)
+                document.getElementsByClassName("red test")     // all elements that have both red and test classes
+        .querySelector()
+            all-in-one method to select single element, the first match
+                document.querySelector('tag')
+                document.querySelector('#id')
+                document.querySelector('.class')
+                document.querySelector('img:nth-of-type(2)')
+                document.querySelector('a[title="Java"]')
+        .querySelectorAll()
+            returns all matched 
+                document.querySelectorAll('p a')
+
+
+        .getAttribute()
+            gets directly from HTML not DOM
+                let currentClasses = h2.getAttribute('class')
+            can also acces by, uses DOM 
+                const input = document.querySelector('input')
+                input.type
+        .setAttribute()
+            input.setAttribute('class', `${currentClasses} purple`)     // adding purple class 
+            input.type = 'password'
+        
+        
+
+
+        Properties
+            .innerText
+                property of HTMLElement that represents the rendered text content. sensitive to what's actually showing 
+                document.querySelector('p').innerText
+            .textContent
+                like innerText but doesn't case what's actually showing up on screen
+            .innerHTML
+                returns tags as well
+                    document.querySelector('h1').innerHTML = '<i>Italicised<i>'
+            .style
+                contains in-line style in HTML
+                    document.querySelector('h1').style.color
+
+                 window.getComputedStyle()
+                    window.getComputedStyle(document.querySelector('h1')).
+            .classList
+                DOMTokenList, control the classes on an element and retrive them
+                    h2.classList 
+                .add()
+                    h2.classList.add('purple')      // adds class of purple 
+                .remove()
+                    h2.remove('border')
+                .contains()
+                .toggle()
+                    add if not present and vice versa
+            .parentElement
+                traverses upwards, only one parent  
+            .children
+                HTMLCollection
+                .childElementCount 
+            .nextSibling, .previousSibling
+                includes text nodes that aren't HTML tags
+            .nextElementSibling, .previousElementSibling
+            .elements
+                when dealing with forms 
+                    form.elements.query.value
+
+
+
+Events   
+    event object
+        automatically passed in to our callback function, contains information about that event 
+            .addEventListener('click', function (evt) {evt.preventDefault()})
+            MouseEvent
+            KeyboardEvent
+            
+        .preventDefault()
+            prevents default behaviour, like forms won't open new page automaticall and send you to a new page
+
+        .stopPropagation()
+            events bubble up to the top when elements are nested, 
+            so when child element event happens, it triggers parent event events one by one as well but this method stops upward propagation  
+    ways
+        in-line event handlers 
+            not a good approach, because behavious is exclusive to that element
+                <button onlick="alert('you clicked me!')">Click Me!</button>
+
+        defining element properties using JS
+            give it a function, can only have one callback for same event
+                const btn = document.querySelector('button');
+                btn.onclick = () => console.log("You clicked me!");
+                btn.onmouseenter = () => console.log("AAAH!");
+
+        .addEventListener()
+            method of `EventTarget` interface, allows as many callback as we want for the same event 
+                button.addEventListener('click', () => alert('You clicked!'))
+                button.addEventListener('click', () => alert('Second Action'))
+
+            `this` keyword inside the callback function will refer to the element 
+                h1.addEventListener('click', function() {
+                    this.style.backgroundColor = randomColor();
+                })
+
+                function colorize() {                                   // random color
+                    this.style.backgroundColor = randomColor()
+                }
+                h1.addEventListener('click', colorize)
+
+                const input = document.querySelector('input')
+                input.addEventListener('keyup', callback)
+                'keyup', 'keydown'
+        
+            passes Event Object to it's callback function
+                window.addEventListener('keydown', function(e) {
+                    switch (e.code) {
+                        case 'ArrowUp':
+                            console.log("Up!");
+                            break;
+                        case 'ArrowDown':
+                            console.log("Down!");
+                            break;
+                        default:
+                            console.log("Ignored!");
+                    }   
+                })
+
+            Event Types 
+                    Mouse Events
+                        'click', 'dblclick', mousedown/mouseup, mousemove, mouseenter/mouseleave, mouseover/mouseout
+                    
+                    Keyboard Events
+                        'keydown', 'keyup'
+                        .code       location of the key pressed
+                        .key        text that is entered
+                    
+                    Forms, Input Events
+                        'submit'
+                            form is submitted
+                                <form action = "/dogs" id="tweetform">          // data sent to /shelter and page changed
+                                    <input type="text" name="username" placeholder="username">
+                                    <input type="text" name="tweet" placeholder="tweet">
+                                    <button>Post Tweet</button>
+                                </form>
+                                    
+                                const tweetForm = document.querySelector("#tweetform ")
+                                tweetForm.addEventListener('submit', function (e) {
+                                    e.preventDefault();
+                                    const usernameInput = tweetForm.elements.username;              // `.elements` we can access them by their name="" attribute
+                                    usernameInput.value = "";                                       // `.value` form element value are accessed using 
+                                }); 
+                        'change'        
+                            when input loses focus after its value has been modified
+                        'input' 
+                            value of <input>, <textarea>, <contentidtable> element changes   
+                                const input = document.querySelector('input');
+                                input.addEventListener('input', (e) => {
+                                    h1.innerText = input.value;
+                            })
+                        'blur'
+                            element loses focus
+                        'focus'
+                            element gains focus
+                        'reset'
+                            form is reset
+                    
+                    Window & Document Events 
+                        load                whole page is fully loaded
+                        DOMContentLoaded    initialHTML completely loaded, without waiting for images 
+                        resize              window resized 
+                        scroll              when scrolling occurs
+                    
+                    Clipboard Events
+                                copy                fires when content is copied
+                                cut                 fires when content is cut
+                                paste               fires when content is pasted
+
+                    Touch Events (Mobile)
+                                touchstart          triggered when a finger touches the screen
+                                touchmove           fires as the finger moves across the screen
+                                touchend            fires when the finger is lifted off the screen
+                                touchcancel         fires when the touch is interrupted
+
+                    Drag & Drop Events
+                                dragstart           fires when dragging starts
+                                drag                fires continuously while dragging
+                                dragenter           triggered when dragged item enters a valid drop target
+                                dragleave           triggered when dragged item leaves a drop target
+                                dragover            fires while dragging over a target (needs preventDefault to allow dropping)
+                                drop                fires when the item is dropped
+
+                    Media Events
+                                play                triggered when media starts playing
+                                pause               triggered when media is paused
+                                ended               fires when media playback ends
+                                volumechange        fires when the volume is adjusted
+
+                    Miscellaneous Events
+                                contextmenu         fires when the right-click menu is opened
+                                error               fires when a resource fails to load
+                                animationstart      fires when a CSS animation starts
+                                animationend        fires when a CSS animation ends
+                                animationiteration  fires when a CSS animation repeats
+                                transitionend       fires when a CSS transition completes
+
+        .removeEventListener()
+                removes event listener previously registered with EventTarget.addEventListener() from target 
+    
+    Event Delegation
+            attach Event Listener to the parent element so that all old/new elements nested inside also that that event property
+
+            here we have added eventlistener to parent <ul> instead of <li> so every <li> in <ul> carries the same property 
+                    ul.addEventListener('click', function (e) {
+                        if (e.target.nodeName === 'LI'){
+                            e.target.remove();                      // remove <li> nested in <ul>
+                        }
+                    })
+
+
+
+Async JS
+    JS is single threaded but works around that using browsers
+    browsers come with Web APIs that are able to handle certain tasks in the backghround (making requests, setTimeout)
+    JS call stack recognized these Web API functions and passes them off to the browser to take care of 
+    once browser finished those tasks, they return and are pushed onto the the stack as callback
+
+        console.log('i print first')
+        setTimeout(() => console.log('print after 3 seconds'), 3000)
+        console.log('i print second')
+    
+    Callbacks Hell 
+        callbacks are used for ASYNC functions 
+        success callback and faliure callbacks per request, lost of nasty function
+            const requestCallback = (url, success, faliure) => {
+                const delay = Math.random() * 4500;
+                setTimeout(() => {
+                    if (delay > 4000) {
+                        faliure('Connection Timeout')
+                    }
+                    else {
+                        successs(`Data ${url})
+                    }
+                }, delay)
+            }
+            
+            setTimeout(() => {
+                document.body.style.backgroundColor = 'red';
+                setTimeout(() => {
+                    document.body.style.backghroundcolor = 'orange';
+                    setInterval(---)
+                }, 1000)
+            }, 1000)
+
+            const delayedColorChange = (newColor, delay, doNext) => {
+                setTimeout(() => {
+                    document.body.style.color = newColor;
+                    doNext && doNext();         // undefined if we didn't pass anything in so the second half doen't run
+                }, delay);
+            }   
+
+            delayedColorChange('red', 1000, () => {
+                delayedColorChange('orange', 100)
+            })
+
+            searchMoviesAPI('amadeus', () => {
+                // if API function works
+                saveToMyDB(movies, () => {
+                    // if it works, run this:
+                }, () => {
+                    // if it doesn't work, run this:
+                })
+            }, () => {
+                // if API function doesn't work
+            })
+    
+    Promises
+        object representing eventual completion or faliure of async operation, and its returning value
+        pending         initial state
+        fulfilled       succesfull
+        rejected        failed    
+
+        .resolve(value)         marks Promise fulfilled with value 
+        .reject(error)          marks Promise reject with error message 
+
+            const myPromise  = new Promise((resolve, reject) => {
+                const success = true;
+                if (success) {
+                    resolve('successfull');
+                } else {
+                    reject ('failed');
+                }
+            })
+
+        .then(resultCallback)         for success,  and returns new Promise, when used after .catch(), always executed
+                .then(result => {})
+        .catch(errorCallback)     
+                .catch(error => {})     
+        .finally() to define flow
+                finally(() => {})
+
+                const fakeRequest = (url) => {
+                    return new Promise((resolve, reject) => {
+                        const rand = Math.random();
+                        setTimeout(() => {
+                            if (rand < 0.7) {
+                                resolve('Fake Data');
+                            } 
+                            reject('Request Error');
+                        }, 1000);
+                    })
+                }
+
+                promiseObject.then(fullfilledCallback).catch(rejectedCallback)
+
+                requestPromise('1')
+                    .then((data) => return requestPromise('2'))         // sequential requests 
+                    .then((data) => return requestPromise('3))
+                    .catch((err) => console.log('Request Failed'))
+
+                const delayedColorChange = (color, delay) => {
+                    return new Promise((resolve, reject) => {
+                        document.body.style.backgroundColorr = color;
+                        resolve();
+                    }, delay)
+                }
+
+                delayedColorChange('red', 1000)
+                    .then(() => delayedColorChange('orange', 1000))
+                    .then(() => delayedColorChange('blue', 1000))
+                    .then(() => delayedColorChange('yellow', 1000))
+                    .then(() => delayedColorChange('brown', 1000))
+                    .then(() => delayedColorChange('violet', 1000))
+
+        Promise.all([])
+            waits for all Promises to fulfill, if any reject, immediately rejects 
+                Promise.all([
+                    Promise.resolve("1");
+                    ---
+                ]).then(results => console.log(results))            // ['1', '2', ]
+                .catch(err => console.error(err));
+        Promis.race([])
+            resoves, rejects as soon as any Promise settles
+        Promise.allSettled([])
+            waits for all Promises to settle
+        Promise.any([])
+            resolves with first fulfilled Promise 
+
+    Async Functions
+        async 
+            declare async functions, always return a promise automatically
+            if function returns a value then promise will be resolved with that value 
+            if function throws exception, promise will be rejected 
+                    async function hello () {
+                        return 'hey';               // Promise (<resolved>: 'hey')
+                    }
+                    async function uhoh () {
+                        throw new Error ('oh no!'); // Pomise (<rejected>: Error: oh no!)
+                    }
+                    
+                    const sing = async () => {return 'Lalala'}      // Promise (<resolved>: 'allala')
+                    sing().then((data) => console.log("Promise resolved with", data)).catch(err => console.log('oh no' + err))
+                    
+                    const login = async (username, password) => {
+                        if (!username || !password) throw 'Missing Credentials';
+                        if (password === 'pass') return 'Welcome!'
+                        throw 'Invalid Password'
+                    }
+                    login('anush', 'pass').then(msg => {console.log('logged' + msg)}).catch(err => {console.log('error' + err)})
+        await
+            will pause execution of fucntion, waiting for a promise to be resolved
+                    async function rainbow () {
+                        await delayedColorChange('red', 1000)
+                        await delayedColorChange('orange', 1000)
+                        await delayedColorChange('blue', 1000)
+                        await delayedColorChange('violed', 1000)
+                        await delayedColorChange('green', 1000)
+                        await delayedColorChange('indigo', 1000)
+                        return 'resolved'
+                    }
+
+                    async function makeTwoRequests() {
+                        try {
+                            let data1 = await fakeRequest('/page1')
+                            let data2 = await fakeRequest('/page2')
+                        } catch (e) {
+                            console.log('error', e)
+                        }
+                    }
+
+
+
+Requests    
+    AJAX    
+        asynchronous javascript and xml, more common now, async js and json
+        making requests behind the scenes, 
+
+    API 
+        application programming interface 
+        defines interactions between multiple software itermediaries, kinds of calls, requests that can be made, data formats, conventions to follow
+        Web API, for web server/browser, usually retured in JSON
+   
+            XML
+
+                extensible markup langauge
+                like HTML but the tags can be anything
+                    <root>
+                        <Products>
+                            <Product>
+                                <Code>2941</Code>
+                                <Qty>23</Qty>
+                            </Product>
+                            <Product>
+                                ---
+                            </Product>
+                            ---
+                        </Products>
+                    </root>
+
+            JSON 
+                javascript object notation, key value pairs in key has to be "dblquotedstring"
+                returned as string so must be converted to object
+                    const parsed = JSON.parse(data)
+                    parsed.key 
+                object -> json string
+                    JSON.stringify(parsed)
+            
+
+            HTTP Verbs
+                GET 
+                    fetch
+                POST/PUT
+                    transmit
+            
+            HTTP Status Codes 
+                Informational   100-199
+                Successful      200-299
+                    200 OK
+                Redirection     300-399
+                Client error    400-499
+                    404     not found
+                    405     method not allowed
+                Server error    500-599
+
+            Query String
+                end of url ?, then key vaule pairs, separated by &
+                is ignored by server unless it's looking for it
+                    baseurl?queryString
+                    url.com/api/something?K=------D=-----------X=-------F=-------
+            
+            Headers
+                addidtional way to passing info with request/response, key value pairs
+                key:value pairs, addon details
+                devtools -> network -> headers tab
+                    Accept: application/json
+        
+    XMLHttpRequest
+        original way of sending requests, doesn't support promises, but returns XMLHttpRequest
+            const req = new XMLHttpRequest();
+            req.onload = function ()  {
+                console.log(this)                                   // response object
+                console.log(JSON.parse(this.responseText))          // JSON response
+                
+                const req2 = ---            // nesting required
+                };
+            req.onerror = function (err) {
+                console.logg('Error', err)
+            };
+            req.open('GET', 'https://swapi.dev/api/people/1')
+            req.setRequestHeader('Accept', 'application/json')
+            req.send();
+    
+    fetch()
+        returns promise
+            fetch("https://swapi.dev/api/poeple/1/")
+                .then(res => {
+                    console.log('Resolved', res)                                // res is a ReadableStream, has incomplete body and doesn't contain all the JSON data
+                    return res.json()                                                  // .json() returns Promise
+                })
+                .then(data => {
+                    console.log('JSON Done', data)             // need to just .json() for complete JSON data 
+                    return fetch("https://swapi.dev/api/poeple/2/")
+                })
+                .then(res => {
+                    console.log('Resolved 2', res)
+                    return res.json()
+                })
+                .then(data => {
+                    console.log('JSON Done 2', data)
+                })
+                .catch(e => {
+                    cosole.log('Error', e)
+                })
+
+        using async functions
+            const loadStarWarsPeople = async () => {
+                try {
+                    const res = await fetch("https://swapi.dev/api/poeple/1/")
+                    const data = await res.json();
+                    console.log(data);
+                    const res2 = await fetch("https://swapi.dev/api/poeple/2/")
+                    const data2 = await res.json();
+                    console.log(data2)
+                } catch (e) {
+                    console.log("error", e)
+                }
+            }
+    
+    Axios
+        library for making HTTP requests, not native 
+            const axios = require('axios')
+
+            axios.get('/user?ID=12345')
+                .then(function (response) {
+                    //success 
+                    console.log(response)       // json already parsed 
+                })
+                .catch(function (error) {
+                    // faliure 
+                })
+                .then(function () {
+                    // always executed
+                })
+
+            const getStarWarsPerson = async (id) => {
+                try {
+                    const res = await axios.get(`https://swapi.dev/api/poeple/${}/`)
+                    console.log(res)
+                } catch (e) {
+                    // fail
+                }
+            }
+
+            const getDadJoke = async () => {
+                const config = {headers: {Accept: 'application/json'}}              // sending headers with request 
+                const res = await axios.get('https://icanhazdadjoke.com/', config)
+                console.log(res.data.joke)                                                    // in proper parsed json format
+            }
+
+
+
+Object Oriented Programming 
+    Factory Function 
+        make objects, each object has a unique copy of the function itself
+            function makeColor(r, g, b) {
+                const color = {}
+                color.r = r;
+                color.g = g;
+                color.b = b;
+                color.rgb = function() {
+                    const {r, g, b} = this;
+                    return `rgb(${r}---)
+                }
+                color.hex = function() {
+                    ---
+                }
+                return color;
+            }
+            const myColor = makeColor(0, 0, 0)          // returns color object
+            const secondColor = makeColor(---)
+            myColor.hex === secondColor                 // unique  
+    
+    Prototype
+        mechanism by which js objects inhert features from one another 
+        objects can have prototype object that can act as a template object and is shared between objects of the same Constructor
+
+        __proto__
+            referce to the prototypes
+
+        Constructor Function
+            properties defined as below and should be created using `new` otherwise `this` refers to Window object
+            methods are defined separately otherwise like Constructor.prototype.function = function() {} otherwise they'll be unique to objects
+                function Color(r, g, b) {
+                    this.r = r;
+                    this.g = g;
+                    this.b = b;
+                }
+            new    
+                creates blank plain JS object, 
+                links (sets the constructor of) this object to another object. so we can add methods to prototype not individual objects 
+                passes the newly created object at start as the `this` context, returns `this` if the function doesn't return it's own object
+                    
+                    // arrow functions behave differently with `this` 
+                    Color.prototype.rgb = function () {
+                        const {r, g, b} = this;
+                        return `rgb(${}---)
+                    }
+                    Color.prototype.hex = function () {
+                        ---
+                    }
+                    const thisRefersWindow = Color(r, g, b)
+                    const thisRefersColor = new Color(r, g, b)
+        
+    Classes 
+            class Color {
+                constructor (r, g, b, name) {
+                    this.r = r
+                    this.b = b
+                    this.g = g
+                    this.name = name;
+                }
+                rgb () {
+                    return 'this is a method'
+                }
+            }
+        Interitence 
+            extends 
+                uses parent constructor if base class doesn't have one 
+                    class Pet {}
+                    class Cat extends Pet {}                
+                    class Dog extends Pet {}
+            super
+                reference to the super class 
+                    class Cat extends Pet {
+                        constructor (name, age, livesLeft = 9) {
+                            super(name, age)
+                            this.livesLetft = livesLeft;
+                        }
+                    }
+
+
