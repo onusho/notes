@@ -45,3 +45,143 @@ collection
 mongoose
     ODM/ORM object document mapper, map documents coming from databse to usable JS objects
     way to model out application data and define schema, easy ways to validate data and build complex queires
+
+    Schema 
+        schema types 
+            String, Number, ...
+        schema type options
+            required: true/false
+            default: 
+            minlength:, maxlength:
+            min: , max:
+            enum:
+                price: {
+                    type: Number,
+                    required: true,
+                    min: [0, 'Price must be positive']          // min value and error message
+                }
+                size: {
+                    type: String,
+                    enum: ['s', 'm', 'l', 'xl']
+                }
+    Model
+
+
+        Instance Methods
+            instances of Models are documents and can define own custom document instance methods
+                animalSchema.methods.findSimilarTypes = function(cb) {
+                    return mongoose.model('Animal').find({type: this.type}, cb)
+                }
+                productSchema.methods.addCategory = function (newCat) {
+                    this.categories.push(newCat)
+                    return this.save()
+                }
+
+                const findProduct = async () => {
+                    const foundProduct = await Product.findOne({name: 'Mountain Bike'})
+                    await foundProduct.toggleOnSale()
+                    await foundProduct.addCategory('Outdoors')
+                }
+        Static Methods 
+            refers to the the model class itself
+            schema.statics
+                animalSchema.statics.findByName = function(name) {
+                    return this.find({name: new RegExp(name, 'i')})
+                }
+                productSchema.statics.fireSale = function  {
+                    return this.updateMany({}, {onSale: true, price: 0})
+                }
+                Product.fireSale().then(res => console.log(res))
+            Schema#static()
+                animalSchema.static('findByBreed', function(breed) {
+                    return this.find({breed})
+                })
+
+        Virtuals
+            document properties,  getter, setter but that do not get persisted to db 
+            const personSchema = new mongoose.Schema({
+                first: String,
+                last: String 
+            })
+            const Person = new mongoose.model('Person', personSchema)
+            personSchema.virtual('fullName').get(function () {
+                return this.name.first + ' ' + this.name.last
+            })
+    
+            personSchema.virtual('fullName').
+                get(function() {return this.name.first + ' ' + this.name.last}).
+                set(function(v) {
+                    this.name.first = v.substr(0, v.indexOf(' '))
+                    this.name.last = v.substr(v.indexOf(' ') + 1)
+                })
+        
+        Middleware
+            run code before and after something is done
+                document middleware 
+                model middleware 
+                aggregate middleware 
+                query middleware
+
+            pre, post middleware 
+                schema.pre('save', function () {
+                    return doStuff().then(() => doMoreStuff());
+                })
+                schema.pre('save', async function () {
+                    await doStuff();
+                    await doMoreStuff();
+                })
+                
+        const mongoose = require('mongoose')
+        mongoose.connect()
+
+        mongoose.connect('mongodb://127.0.0.1:27017/moviesDB')
+        mongoose.set('strictQuery', true)
+
+        var movieSchema = new mongoose.Schema({                     // blue print that defines structure of documents
+            title: String,
+            year: Number,
+            score: Number,
+            rating: String,
+            category: [String]                  // array of strings
+            qtry: {
+                online: {
+                    type: Number,
+                    default: 0
+                },
+                inStore: {
+                    type: Number,
+                    default: 0
+                }
+            }
+        })
+
+        const productSchema = new mongoose.Schema({
+            name: {
+                type: String,
+                required: true
+            },
+            price: {
+                type: Number,
+            },
+        })
+
+        const Product = mongoose.model('Product', productSchema)
+        const bike = new Product({name: 'Mountain Bike', price: 599})
+
+        bike.save().then(data => {
+            console.log(data)
+        }).catch(err => {
+            console.log(err)
+        })
+
+        const Movie = mongoose.model('Movie', movieSchema)          // model class for collection
+        const amadeus = new Movie({title: 'amadeus', year: 1986, score: 9.6, rating: 'a'})
+        amadeus.save()
+
+
+        Model.findOneAndUpdate({name: 'Pic'}, {ship: 'ent'}, {new: true, runValidators: true})          // setting options, new returns new updated, runValidators make sure schema is followed
+        Movie.findOne({}).then(data => console.log(data))         
+        Movie.findById()
+        Person.updateOne({name: 'Picard'}, {ship: 'Enterprise'}).then(res => console.log(res))
+        Model.remove({title: 'Amelie'}).then(msg => console.log(msg))
+        Model.deleteMany({year: {$gte: 1999}}).then(msg => console.log(msg))
