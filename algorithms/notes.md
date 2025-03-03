@@ -160,6 +160,22 @@ Stack
 
 Queue
 
+
+# Heap Priority Queues 
+
+- i, (i * 2) + 1, (i * 2) + 2
+- heap pop: pop root and swim elements up to correct positions O(log n)
+- heap push: push as leaves and swim/sink elements to correct positions O(log n)
+- heapify: start from non leaf nodes and send them to correct positions, sift down O*(n)
+
+# Dynamic Programing
+
+- used to optimization and counting problems
+- draw recursion tree -> memoize repeated computation
+- top down approach
+- bottom up approach
+
+
 ## Design Patterns
 
 - Creational Patten
